@@ -1,0 +1,84 @@
+\hypertarget{classcmd_1_1cmd__processor}{\section{cmd\-:\-:cmd\-\_\-processor Class Reference}
+\label{classcmd_1_1cmd__processor}\index{cmd\-::cmd\-\_\-processor@{cmd\-::cmd\-\_\-processor}}
+}
+
+
+Central singleton class for processing command line entries.  
+
+
+
+
+{\ttfamily \#include $<$cmd\-\_\-processor.\-h$>$}
+
+\subsection*{command management.}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcmd_1_1cmd__processor_a03712564937c37f196633880f8876a3a}{add\-\_\-command} (\hyperlink{classcmd_1_1cmd__base}{cmd\-\_\-base} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Adds command to command list of command processor. \end{DoxyCompactList}\item 
+void \hyperlink{classcmd_1_1cmd__processor_a03ac466a41a77fc30490ae72446c6e2d}{parse\-\_\-and\-\_\-execute\-\_\-command} (const std\-::string \&c\-\_\-l)
+\begin{DoxyCompactList}\small\item\em Parses command string and makes execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{singleton management}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcmd_1_1cmd__processor_a469ef9311a2c4dacd99172acd9568004}{static \hyperlink{classcmd_1_1cmd__processor}{cmd\-\_\-processor} \& \hyperlink{classcmd_1_1cmd__processor_a469ef9311a2c4dacd99172acd9568004}{get\-\_\-instance} ()}\label{classcmd_1_1cmd__processor_a469ef9311a2c4dacd99172acd9568004}
+
+\begin{DoxyCompactList}\small\item\em Gets singletone object. \end{DoxyCompactList}\item 
+\hypertarget{classcmd_1_1cmd__processor_af1575ac253ee9b68a0f90fb1151635a8}{static void \hyperlink{classcmd_1_1cmd__processor_af1575ac253ee9b68a0f90fb1151635a8}{instantiate} ()}\label{classcmd_1_1cmd__processor_af1575ac253ee9b68a0f90fb1151635a8}
+
+\begin{DoxyCompactList}\small\item\em Intstantiates singletone object. \end{DoxyCompactList}\item 
+\hypertarget{classcmd_1_1cmd__processor_a5cfe052f862135f78149afcfbb822fbd}{static void \hyperlink{classcmd_1_1cmd__processor_a5cfe052f862135f78149afcfbb822fbd}{destroy} ()}\label{classcmd_1_1cmd__processor_a5cfe052f862135f78149afcfbb822fbd}
+
+\begin{DoxyCompactList}\small\item\em Destroys singletone object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Special member functions.}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcmd_1_1cmd__processor_a43ff9a70dcb3b5f13e64aa03b0f2953f}{\hyperlink{classcmd_1_1cmd__processor_a43ff9a70dcb3b5f13e64aa03b0f2953f}{cmd\-\_\-processor} ()=default}\label{classcmd_1_1cmd__processor_a43ff9a70dcb3b5f13e64aa03b0f2953f}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classcmd_1_1cmd__processor_a50b3836ac227c968d04d8aec461e1cb7}{\hyperlink{classcmd_1_1cmd__processor_a50b3836ac227c968d04d8aec461e1cb7}{$\sim$cmd\-\_\-processor} ()}\label{classcmd_1_1cmd__processor_a50b3836ac227c968d04d8aec461e1cb7}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Central singleton class for processing command line entries. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classcmd_1_1cmd__processor_a03712564937c37f196633880f8876a3a}{\index{cmd\-::cmd\-\_\-processor@{cmd\-::cmd\-\_\-processor}!add\-\_\-command@{add\-\_\-command}}
+\index{add\-\_\-command@{add\-\_\-command}!cmd::cmd_processor@{cmd\-::cmd\-\_\-processor}}
+\subsubsection[{add\-\_\-command}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\-::cmd\-\_\-processor\-::add\-\_\-command (
+\begin{DoxyParamCaption}
+\item[{{\bf cmd\-\_\-base} $\ast$}]{cmd}
+\end{DoxyParamCaption}
+)}}\label{classcmd_1_1cmd__processor_a03712564937c37f196633880f8876a3a}
+
+
+Adds command to command list of command processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & Command to add. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcmd_1_1cmd__processor_a03ac466a41a77fc30490ae72446c6e2d}{\index{cmd\-::cmd\-\_\-processor@{cmd\-::cmd\-\_\-processor}!parse\-\_\-and\-\_\-execute\-\_\-command@{parse\-\_\-and\-\_\-execute\-\_\-command}}
+\index{parse\-\_\-and\-\_\-execute\-\_\-command@{parse\-\_\-and\-\_\-execute\-\_\-command}!cmd::cmd_processor@{cmd\-::cmd\-\_\-processor}}
+\subsubsection[{parse\-\_\-and\-\_\-execute\-\_\-command}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\-::cmd\-\_\-processor\-::parse\-\_\-and\-\_\-execute\-\_\-command (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{c\-\_\-l}
+\end{DoxyParamCaption}
+)}}\label{classcmd_1_1cmd__processor_a03ac466a41a77fc30490ae72446c6e2d}
+
+
+Parses command string and makes execution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c\-\_\-l} & Command string. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+cmd\-\_\-processor/\hyperlink{cmd__processor_8h}{cmd\-\_\-processor.\-h}\item 
+cmd\-\_\-processor/\hyperlink{cmd__processor_8cpp}{cmd\-\_\-processor.\-cpp}\end{DoxyCompactItemize}

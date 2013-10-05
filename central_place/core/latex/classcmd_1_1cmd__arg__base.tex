@@ -1,0 +1,140 @@
+\hypertarget{classcmd_1_1cmd__arg__base}{\section{cmd\-:\-:cmd\-\_\-arg\-\_\-base Class Reference}
+\label{classcmd_1_1cmd__arg__base}\index{cmd\-::cmd\-\_\-arg\-\_\-base@{cmd\-::cmd\-\_\-arg\-\_\-base}}
+}
+
+
+Abstract base class for command args.  
+
+
+
+
+{\ttfamily \#include $<$cmd\-\_\-arg\-\_\-base.\-h$>$}
+
+Inheritance diagram for cmd\-:\-:cmd\-\_\-arg\-\_\-base\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcmd_1_1cmd__arg__base}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcmd_1_1cmd__arg__base_a2f2b037e416eb71c4922e15637a459d9}{bool \hyperlink{classcmd_1_1cmd__arg__base_a2f2b037e416eb71c4922e15637a459d9}{is\-\_\-specified} () const }\label{classcmd_1_1cmd__arg__base_a2f2b037e416eb71c4922e15637a459d9}
+
+\begin{DoxyCompactList}\small\item\em Returns true if argument is specified, otherwise returns false. \end{DoxyCompactList}\item 
+void \hyperlink{classcmd_1_1cmd__arg__base_a6e2d899a1e0cb0a8babbcb2dceda7a85}{set\-\_\-specified} (bool s)
+\begin{DoxyCompactList}\small\item\em Sets specified flag of argument. \end{DoxyCompactList}\item 
+const std\-::string \& \hyperlink{classcmd_1_1cmd__arg__base_ab68609a393e1be2f50199a6af09ce107}{get\-\_\-name} () const 
+\begin{DoxyCompactList}\small\item\em Gets argument's name. \end{DoxyCompactList}\item 
+bool \hyperlink{classcmd_1_1cmd__arg__base_a217bfd2e37d9d45366e2ae649364f4e3}{is\-\_\-equal} (const std\-::string \&n) const 
+\begin{DoxyCompactList}\small\item\em Checks if argument has same name. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcmd_1_1cmd__arg__base_a2767ec77135f82eac5f3ca754b24acff}{set\-\_\-value} (const std\-::string \&v)=0
+\begin{DoxyCompactList}\small\item\em Pure virtual function to set argument's value. \end{DoxyCompactList}\item 
+\hypertarget{classcmd_1_1cmd__arg__base_a6d3b76394a6fb601e4e50cf349e60436}{virtual void \hyperlink{classcmd_1_1cmd__arg__base_a6d3b76394a6fb601e4e50cf349e60436}{reset} ()=0}\label{classcmd_1_1cmd__arg__base_a6d3b76394a6fb601e4e50cf349e60436}
+
+\begin{DoxyCompactList}\small\item\em Pure virtual function to reset argument. \end{DoxyCompactList}\item 
+\hyperlink{classcmd_1_1cmd__arg__base_a6a8a3cc24add61aa01748592cdd25798}{cmd\-\_\-arg\-\_\-base} (const std\-::string \&name)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classcmd_1_1cmd__arg__base_a1322db06597ff12b16490bfdb62159cd}{virtual \hyperlink{classcmd_1_1cmd__arg__base_a1322db06597ff12b16490bfdb62159cd}{$\sim$cmd\-\_\-arg\-\_\-base} ()}\label{classcmd_1_1cmd__arg__base_a1322db06597ff12b16490bfdb62159cd}
+
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstract base class for command args. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcmd_1_1cmd__arg__base_a6a8a3cc24add61aa01748592cdd25798}{\index{cmd\-::cmd\-\_\-arg\-\_\-base@{cmd\-::cmd\-\_\-arg\-\_\-base}!cmd\-\_\-arg\-\_\-base@{cmd\-\_\-arg\-\_\-base}}
+\index{cmd\-\_\-arg\-\_\-base@{cmd\-\_\-arg\-\_\-base}!cmd::cmd_arg_base@{cmd\-::cmd\-\_\-arg\-\_\-base}}
+\subsubsection[{cmd\-\_\-arg\-\_\-base}]{\setlength{\rightskip}{0pt plus 5cm}cmd\-::cmd\-\_\-arg\-\_\-base\-::cmd\-\_\-arg\-\_\-base (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classcmd_1_1cmd__arg__base_a6a8a3cc24add61aa01748592cdd25798}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name of Argument. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcmd_1_1cmd__arg__base_ab68609a393e1be2f50199a6af09ce107}{\index{cmd\-::cmd\-\_\-arg\-\_\-base@{cmd\-::cmd\-\_\-arg\-\_\-base}!get\-\_\-name@{get\-\_\-name}}
+\index{get\-\_\-name@{get\-\_\-name}!cmd::cmd_arg_base@{cmd\-::cmd\-\_\-arg\-\_\-base}}
+\subsubsection[{get\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string \& cmd\-::cmd\-\_\-arg\-\_\-base\-::get\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcmd_1_1cmd__arg__base_ab68609a393e1be2f50199a6af09ce107}
+
+
+Gets argument's name. 
+
+\begin{DoxyReturn}{Returns}
+Constant access to argument name. 
+\end{DoxyReturn}
+\hypertarget{classcmd_1_1cmd__arg__base_a217bfd2e37d9d45366e2ae649364f4e3}{\index{cmd\-::cmd\-\_\-arg\-\_\-base@{cmd\-::cmd\-\_\-arg\-\_\-base}!is\-\_\-equal@{is\-\_\-equal}}
+\index{is\-\_\-equal@{is\-\_\-equal}!cmd::cmd_arg_base@{cmd\-::cmd\-\_\-arg\-\_\-base}}
+\subsubsection[{is\-\_\-equal}]{\setlength{\rightskip}{0pt plus 5cm}bool cmd\-::cmd\-\_\-arg\-\_\-base\-::is\-\_\-equal (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{n}
+\end{DoxyParamCaption}
+) const}}\label{classcmd_1_1cmd__arg__base_a217bfd2e37d9d45366e2ae649364f4e3}
+
+
+Checks if argument has same name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Name to compare. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if argument's name is equal to the given name. 
+\end{DoxyReturn}
+\hypertarget{classcmd_1_1cmd__arg__base_a6e2d899a1e0cb0a8babbcb2dceda7a85}{\index{cmd\-::cmd\-\_\-arg\-\_\-base@{cmd\-::cmd\-\_\-arg\-\_\-base}!set\-\_\-specified@{set\-\_\-specified}}
+\index{set\-\_\-specified@{set\-\_\-specified}!cmd::cmd_arg_base@{cmd\-::cmd\-\_\-arg\-\_\-base}}
+\subsubsection[{set\-\_\-specified}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\-::cmd\-\_\-arg\-\_\-base\-::set\-\_\-specified (
+\begin{DoxyParamCaption}
+\item[{bool}]{s}
+\end{DoxyParamCaption}
+)}}\label{classcmd_1_1cmd__arg__base_a6e2d899a1e0cb0a8babbcb2dceda7a85}
+
+
+Sets specified flag of argument. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & flag to set. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcmd_1_1cmd__arg__base_a2767ec77135f82eac5f3ca754b24acff}{\index{cmd\-::cmd\-\_\-arg\-\_\-base@{cmd\-::cmd\-\_\-arg\-\_\-base}!set\-\_\-value@{set\-\_\-value}}
+\index{set\-\_\-value@{set\-\_\-value}!cmd::cmd_arg_base@{cmd\-::cmd\-\_\-arg\-\_\-base}}
+\subsubsection[{set\-\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cmd\-::cmd\-\_\-arg\-\_\-base\-::set\-\_\-value (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classcmd_1_1cmd__arg__base_a2767ec77135f82eac5f3ca754b24acff}
+
+
+Pure virtual function to set argument's value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Value to set. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classcmd__arg__bool_a588134657e85b4ce161f5030f354f00d}{cmd\-\_\-arg\-\_\-bool}, \hyperlink{classcmd__arg__double_a4b7dc6e7a0520080f456896635eaaa1a}{cmd\-\_\-arg\-\_\-double}, \hyperlink{classcmd__arg__int_a04883e51fb34d7c2e3b9c6b6e3151ad8}{cmd\-\_\-arg\-\_\-int}, and \hyperlink{classcmd__arg__string_a434d6b2a9a6ae7e35043113cc0551140}{cmd\-\_\-arg\-\_\-string}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+cmd\-\_\-base/\hyperlink{cmd__arg__base_8h}{cmd\-\_\-arg\-\_\-base.\-h}\item 
+cmd\-\_\-base/\hyperlink{cmd__arg__base_8cpp}{cmd\-\_\-arg\-\_\-base.\-cpp}\end{DoxyCompactItemize}
