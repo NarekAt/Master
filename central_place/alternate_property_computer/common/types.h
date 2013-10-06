@@ -6,8 +6,11 @@
 #pragma once
 
 #include <map>
+#include <list>
 #include <string>
 #include <boost/any.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/erdos_renyi_generator.hpp>
 
 /**
  * @brief Map of process arguments name to value.
@@ -54,3 +57,44 @@ enum alternate_property_type {
  */
 alternate_property_type get_alternate_property_type_by_name(
     const std::string& t_n);
+
+typedef std::list<double> mu_list;
+
+namespace graph_types
+{
+
+// undirected graph
+typedef boost::adjacency_list<
+    boost::setS, boost::listS, boost::undirectedS> undirected_graph;
+
+// random generator
+typedef std::mt19937 random_generator;
+
+// Erdos-Renyi generator
+typedef boost::sorted_erdos_renyi_iterator<
+    random_generator, undirected_graph> erdos_renyi_iterator;
+
+// graph vertex
+typedef boost::graph_traits<undirected_graph>::vertex_descriptor 
+    vertex;
+
+// graph edge
+typedef boost::graph_traits<undirected_graph>::edge_descriptor edge;
+
+// graph out edge
+typedef boost::graph_traits<undirected_graph>::out_edge_iterator 
+    out_edge_iterator;
+
+// graph edge
+typedef boost::graph_traits<undirected_graph>::edge_iterator 
+    edge_iterator;
+
+// vertex iterator
+typedef boost::graph_traits<undirected_graph>::vertex_iterator 
+    vertex_iterator;
+
+// adjacency list iterator
+typedef boost::graph_traits<undirected_graph>::adjacency_iterator 
+    adjacency_iterator;
+
+}

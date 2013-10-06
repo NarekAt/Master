@@ -36,6 +36,13 @@ public:
 
 private:
     bool m_inited;
+    graph_types::undirected_graph m_graph;
+    int m_vertex_count;
+    double m_probability;
+    mu_list m_mu_list;
+    unsigned m_step_count;
+    randomization_type m_randomization_type;
+    alternate_property_type m_alternate_property_type;
     /// @}
 
     /// @name singleton management
