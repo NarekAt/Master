@@ -6,6 +6,7 @@
 #pragma once
 
 #include "types.h"
+#include <boost/program_options.hpp>
 
 /**
  * @class argument_parser
@@ -28,6 +29,8 @@ public:
      */
     arg_name_to_value_map parse_and_get_args(
         int argc, char* argv[], int rank_of_process) const;
+private:
+    boost::program_options::options_description m_options_description;
     /// @}
     
     /// @name singleton management
@@ -60,7 +63,7 @@ public:
     /**
      * @brief Constructor
      */
-    argument_parser() = default;
+    argument_parser();
 
 public:
     /**
