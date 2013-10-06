@@ -1,4 +1,4 @@
 TARGET=compile
 include ../common.mk
 
-IFLAGS=
+IFLAGS=-I../common

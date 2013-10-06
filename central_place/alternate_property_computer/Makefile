@@ -1,4 +1,4 @@
-SUBDIRS=package main argument_parser mediator io property_computers task_managers lib
+SUBDIRS=exceptions common package main argument_parser mediator io property_computers task_managers lib
 
 .PHONY : compile clean
 

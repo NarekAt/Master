@@ -8,6 +8,13 @@
 
 argument_parser* argument_parser::s_instance = nullptr;
 
+arg_name_to_value_map argument_parser::parse_and_get_args(
+    int argc, char* argv[], int rank_of_process) const
+{
+    return arg_name_to_value_map();
+    // TODO: fill body.
+}
+
 argument_parser& argument_parser::get_instance()
 {
     assert(s_instance != nullptr);

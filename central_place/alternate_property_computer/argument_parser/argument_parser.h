@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "types.h"
+
 /**
  * @class argument_parser
  * @brief this class is used for parsing argument of program and
@@ -13,6 +15,21 @@
  */
 class argument_parser
 {
+    /// @name parsing interface
+    /// @{
+public:
+    /**
+     * @brief Parses the arguments and returns map of name->value.
+     * @param argc Argument cound of the process.
+     * @param argv Pointer to the argument list of the process.
+     * @param rank_of_process Rank of the current process, for 
+     *        secondary processes argument parsing is not needed,
+     *        so it will return an empty map.
+     */
+    arg_name_to_value_map parse_and_get_args(
+        int argc, char* argv[], int rank_of_process) const;
+    /// @}
+    
     /// @name singleton management
     /// @{
 public:

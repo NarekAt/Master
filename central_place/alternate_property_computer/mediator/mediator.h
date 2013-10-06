@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "types.h"
 #include <boost/mpi.hpp>
 
 /**
@@ -15,6 +16,28 @@
  */
 class mediator
 {
+    /// @name mediator base public interface
+    /// @{
+public:
+    /**
+     * @brief Inits mediator
+     * @param a_n_v process arguments map.
+     * @note must be called before run() function, and only one time.
+     */
+    void init(const arg_name_to_value_map& a_n_v);
+
+public:
+    /**
+     * @brief Runs mediator
+     * @param world mpi communicator.
+     * @note Before call of this function init() must be called.
+     */
+    void run(const boost::mpi::communicator& world);
+
+private:
+    bool m_inited;
+    /// @}
+
     /// @name singleton management
     /// @{
 public:
@@ -45,7 +68,7 @@ public:
     /**
      * @brief Constructor
      */
-    mediator() = default;
+    mediator();
 
 public:
     /**
