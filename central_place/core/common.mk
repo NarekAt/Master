@@ -22,3 +22,4 @@ $(DIR)/%.o : %.cpp
 
 clean :
 	rm -rf $(DIR)/*.o $(TARGET)
+	rm -rf *.o
