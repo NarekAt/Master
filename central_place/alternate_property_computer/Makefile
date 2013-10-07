@@ -1,4 +1,4 @@
-SUBDIRS=exceptions common package main argument_parser mediator io property_counters task_managers lib
+SUBDIRS=exceptions common package main argument_parser mediator io property_counters randomizers task_managers lib
 
 .PHONY : compile clean
 

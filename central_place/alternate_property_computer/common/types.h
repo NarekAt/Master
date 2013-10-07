@@ -6,6 +6,7 @@
 #pragma once
 
 #include <map>
+#include <set>
 #include <list>
 #include <string>
 #include <boost/any.hpp>
@@ -98,3 +99,6 @@ typedef boost::graph_traits<undirected_graph>::adjacency_iterator
     adjacency_iterator;
 
 }
+
+typedef std::pair<std::set<graph_types::edge>,
+    std::set<graph_types::edge>> remove_add_edges_pair;

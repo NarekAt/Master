@@ -58,8 +58,7 @@ unsigned triangle_counter::compute_decrease_after_remove(
                 || e.end() != e.find(edge_info_pair.first)) {
                 ++d_c;
             }
-        }
-        if (2 < v_e.second.size()) {
+        } else if (2 < v_e.second.size()) {
             for(int i = 0; i < v_e.second.size() - 1; ++i) {
                 for (int j = i + 1; j < v_e.second.size(); ++j) {
                     graph_types::vertex an_v1 = utility::
