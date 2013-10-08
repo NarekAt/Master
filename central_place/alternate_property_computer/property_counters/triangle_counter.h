@@ -25,7 +25,7 @@ public:
      * @param e Edges to remove.
      */
     virtual unsigned compute_decrease_after_remove(
-        const std::set<graph_types::edge>& e) const;
+        const graph_types::null_edges& e) const;
 
 public:
     /**
@@ -33,7 +33,7 @@ public:
      * @param e Edges to add.
      */
     virtual unsigned compute_increase_after_add(
-        const std::set<graph_types::edge>& e) const;
+        const graph_types::null_edges& e) const;
 
 public:
     /**

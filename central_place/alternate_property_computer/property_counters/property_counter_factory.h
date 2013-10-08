@@ -1,5 +1,5 @@
 /**
- * @file property_counter/property_counter_factory.h
+ * @file property_counters/property_counter_factory.h
  * @description declaration of property counter_factory class
  */
 
@@ -28,7 +28,8 @@ public:
 
 template <>
 property_counter_base* property_counter_factory::
-    get_counter<TRIANGLE_COUNT>(const graph_types::undirected_graph& graph)
+    get_counter<TRIANGLE_COUNT>(
+        const graph_types::undirected_graph& graph)
 {
     return new triangle_counter(graph);
 }

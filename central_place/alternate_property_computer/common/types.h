@@ -79,6 +79,15 @@ typedef boost::sorted_erdos_renyi_iterator<
 typedef boost::graph_traits<undirected_graph>::vertex_descriptor 
     vertex;
 
+// graph vertex pair
+typedef std::pair<vertex, vertex> vertex_pair;
+
+// graph nonexisting edges container.
+typedef std::set<vertex_pair> null_edges;
+
+// graph nonexisting edges sequent container
+typedef std::vector<vertex_pair> sequent_null_edges;
+
 // graph edge
 typedef boost::graph_traits<undirected_graph>::edge_descriptor edge;
 
@@ -100,5 +109,5 @@ typedef boost::graph_traits<undirected_graph>::adjacency_iterator
 
 }
 
-typedef std::pair<std::set<graph_types::edge>,
-    std::set<graph_types::edge>> remove_add_edges_pair;
+typedef std::pair<graph_types::null_edges,
+    graph_types::null_edges> remove_add_edges_pair;

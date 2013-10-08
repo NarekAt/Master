@@ -1,5 +1,5 @@
 /**
- * @file randomizators/randomizator_base
+ * @file randomizators/randomizator_base.h
  * @description declaration of class randomizator_base
  */
 
@@ -22,11 +22,11 @@ public:
 public:
     /**
      * @brief Constructor
+     * @param graph Graph to perform randomization.
      */
-    randomizator_base(graph_types::undirected_graph& graph)
-        : m_graph(graph)
-    {}
+    randomizator_base(graph_types::undirected_graph& graph);
 
 protected:
+    graph_types::random_generator m_random_generator;
     graph_types::undirected_graph& m_graph;
 };

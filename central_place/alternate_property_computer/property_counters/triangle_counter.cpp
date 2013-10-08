@@ -38,39 +38,41 @@ unsigned triangle_counter::compute_initial_count() const
 }
 
 unsigned triangle_counter::compute_decrease_after_remove(
-    const std::set<graph_types::edge>& e) const
+    const graph_types::null_edges& e) const
 {
     unsigned d_c = 0;
-    std::map<graph_types::vertex, std::vector<graph_types::edge>>
+    std::map<graph_types::vertex, graph_types::sequent_null_edges>
         vertex_to_edges;
     for (auto& n_e : e) {
-        vertex_to_edges[boost::source(n_e, m_graph)].push_back(n_e);
-        vertex_to_edges[boost::target(n_e, m_graph)].push_back(n_e);
+        vertex_to_edges[n_e.first].push_back(n_e);
+        vertex_to_edges[n_e.second].push_back(n_e);
     }
     for (auto& v_e : vertex_to_edges) {
         if (2 == v_e.second.size()) {
             graph_types::vertex an_v1 = utility::get_another_vertex(
-                v_e.first, v_e.second[0], m_graph); 
+                v_e.first, v_e.second[0]); 
             graph_types::vertex an_v2 = utility::get_another_vertex(
-                v_e.first, v_e.second[1], m_graph);
-            auto edge_info_pair = boost::edge(an_v1, an_v2, m_graph);
-            if (true == edge_info_pair.second
-                || e.end() != e.find(edge_info_pair.first)) {
+                v_e.first, v_e.second[1]);
+            if (true == boost::edge(an_v1, an_v2, m_graph).second
+                || e.end() != e.find(
+                    graph_types::vertex_pair(an_v1, an_v2))
+                || e.end() != e.find(
+                    graph_types::vertex_pair(an_v2, an_v1))) {
                 ++d_c;
             }
         } else if (2 < v_e.second.size()) {
             for(int i = 0; i < v_e.second.size() - 1; ++i) {
                 for (int j = i + 1; j < v_e.second.size(); ++j) {
                     graph_types::vertex an_v1 = utility::
-                        get_another_vertex(v_e.first, v_e.second[i],
-                            m_graph); 
+                        get_another_vertex(v_e.first, v_e.second[i]);
                     graph_types::vertex an_v2 = utility::
-                        get_another_vertex(v_e.first, v_e.second[j],
-                            m_graph); 
-                    auto edge_info_pair = boost::edge(
-                        an_v1, an_v2, m_graph);
-                    if (true == edge_info_pair.second
-                        || e.end() != e.find(edge_info_pair.first)) {
+                        get_another_vertex(v_e.first, v_e.second[j]);
+                    if (true == 
+                            boost::edge(an_v1, an_v2, m_graph).second
+                        || e.end() != e.find(
+                            graph_types::vertex_pair(an_v1, an_v2))
+                        || e.end() != e.find(
+                            graph_types::vertex_pair(an_v2, an_v1))) {
                         ++d_c;
                     }
                 }
@@ -78,8 +80,8 @@ unsigned triangle_counter::compute_decrease_after_remove(
         }
     }
     for (const auto& n_e : e) {
-        graph_types::vertex vs = boost::source(n_e, m_graph);
-        graph_types::vertex vt = boost::target(n_e, m_graph);
+        graph_types::vertex vs = n_e.first;
+        graph_types::vertex vt = n_e.second;
         graph_types::adjacency_iterator v, v_e;
         boost::tie(v, v_e) = boost::adjacent_vertices(vs, m_graph);
         while (v != v_e) {
@@ -94,7 +96,7 @@ unsigned triangle_counter::compute_decrease_after_remove(
 }
 
 unsigned triangle_counter::compute_increase_after_add(
-    const std::set<graph_types::edge>& e) const
+    const graph_types::null_edges& e) const
 {
     // The same code for both: increase and decrease :)
     return compute_decrease_after_remove(e);
