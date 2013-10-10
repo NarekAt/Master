@@ -7,6 +7,6 @@
 
 randomizator_base::randomizator_base(
     graph_types::undirected_graph& graph)
-    : m_random_generator(time(NULL)),
+    : m_random_generator(time(0)),
     m_graph(graph)
 {}

@@ -22,6 +22,12 @@ public:
 
 public:
     /**
+     * @brief Gets type of randomizator (RANDOM_SWITCH).
+     */
+    virtual randomization_type get_type() const;
+
+public:
+    /**
      * @brief Constructor
      * @param graph Graph to perform randomization.
      */

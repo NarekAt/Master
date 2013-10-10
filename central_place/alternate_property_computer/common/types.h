@@ -59,7 +59,21 @@ enum alternate_property_type {
 alternate_property_type get_alternate_property_type_by_name(
     const std::string& t_n);
 
+/**
+ * @brief mu values list.
+ */
 typedef std::list<double> mu_list;
+
+/**
+ * @brief vector of pairs: step number to setp property count.
+ */
+typedef std::vector<std::pair<int, double>> single_results_list;
+
+/**
+ * @brief map from mu value to appropriate vector of pairs:
+ *        step number to step property count.
+ */
+typedef std::map<double, single_results_list> calculation_results;
 
 namespace graph_types
 {

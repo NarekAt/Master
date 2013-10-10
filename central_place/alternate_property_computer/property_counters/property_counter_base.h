@@ -37,6 +37,12 @@ public:
     virtual unsigned compute_increase_after_add(
         const graph_types::null_edges& e) const = 0;
 
+public:
+    /**
+     * @brief Gets property counter type
+     */
+    virtual alternate_property_type get_type() const = 0;
+
 protected:
     const graph_types::undirected_graph& m_graph;
 

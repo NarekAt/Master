@@ -1,6 +1,6 @@
 /**
  * @file randomizators/randomizator_factory.h
- * @description declaration of property counter_factory class
+ * @description declaration of randomizator_factory class
  */
 
 #pragma once
@@ -18,27 +18,11 @@ class randomizator_factory
 public:
     /**
      * @brief Creates and gets randomizator
-     *        by specialized randomization_type.
+     *        by given randomization_type.
+     * @param graph Graph for randomizator.
+     * @param t Randomization type.
      * @note Got pointer must be deleted after use.
      */
-    template <randomization_type>
     static randomizator_base* get_randomizator(
-        graph_types::undirected_graph& graph);
+        graph_types::undirected_graph& graph, randomization_type t);
 };
-
-
-template <>
-randomizator_base* randomizator_factory::
-    get_randomizator<FIXED_DEGREE>(
-        graph_types::undirected_graph& graph)
-{
-    return new fixed_degree_randomizer(graph);
-}
-
-template <>
-randomizator_base* randomizator_factory::
-    get_randomizator<RANDOM_SWITCH>(
-        graph_types::undirected_graph& graph)
-{
-    return new random_switch_randomizer(graph);
-}

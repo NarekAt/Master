@@ -102,6 +102,11 @@ unsigned triangle_counter::compute_increase_after_add(
     return compute_decrease_after_remove(e);
 }
 
+alternate_property_type triangle_counter::get_type() const
+{
+    return TRIANGLE_COUNT;
+}
+
 triangle_counter::triangle_counter(
     const graph_types::undirected_graph& graph)
     : property_counter_base(graph)

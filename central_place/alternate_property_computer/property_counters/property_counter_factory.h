@@ -1,6 +1,6 @@
 /**
  * @file property_counters/property_counter_factory.h
- * @description declaration of property counter_factory class
+ * @description declaration of property_counter_factory class
  */
 
 #pragma once
@@ -17,19 +17,12 @@ class property_counter_factory
 public:
     /**
      * @brief Creates and gets property counter
-     *        by specialized alternate_property_type.
+     *        by given alternate_property_type.
+     * @param graph Graph for property counter.
+     * @param t Property counter type
      * @note Got pointer must be deleted after use.
      */
-    template <alternate_property_type>
     static property_counter_base* get_counter(
-        const graph_types::undirected_graph& graph);
+        const graph_types::undirected_graph& graph,
+        alternate_property_type t);
 };
-
-
-template <>
-property_counter_base* property_counter_factory::
-    get_counter<TRIANGLE_COUNT>(
-        const graph_types::undirected_graph& graph)
-{
-    return new triangle_counter(graph);
-}

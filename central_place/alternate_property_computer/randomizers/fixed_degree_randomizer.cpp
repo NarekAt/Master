@@ -44,6 +44,11 @@ remove_add_edges_pair fixed_degree_randomizer::get_step()
     return r_a_p;
 }
 
+randomization_type fixed_degree_randomizer::get_type() const
+{
+    return FIXED_DEGREE;
+}
+
 fixed_degree_randomizer::fixed_degree_randomizer(
     graph_types::undirected_graph& graph)
     : randomizator_base(graph)

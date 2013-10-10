@@ -49,6 +49,11 @@ remove_add_edges_pair random_switch_randomizer::get_step()
     return r_a_p;
 }
 
+randomization_type random_switch_randomizer::get_type() const
+{
+    return RANDOM_SWITCH;
+}
+
 random_switch_randomizer::random_switch_randomizer(
     graph_types::undirected_graph& graph)
     : randomizator_base(graph)

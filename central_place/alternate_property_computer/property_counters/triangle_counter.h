@@ -37,6 +37,12 @@ public:
 
 public:
     /**
+     * @brief Gets property counter type (TRIANGLE_COUNT)
+     */
+    virtual alternate_property_type get_type() const;
+
+public:
+    /**
      * @brief Constructor
      * @param graph Graph for computing triangle count.
      */
