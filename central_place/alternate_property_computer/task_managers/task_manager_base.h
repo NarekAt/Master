@@ -51,13 +51,16 @@ protected:
 protected:
     bool m_inited;
     boost::mpi::communicator& m_world;
-    graph_types::undirected_graph m_graph;
+    graph_types::undirected_graph m_initial_graph;
+    graph_types::undirected_graph m_current_graph;
     mu_list m_mu_list;
     unsigned m_step_count;
     // TODO: pass count must be got from program arguments.
     //       for now it will just set to 10.
     unsigned m_pass_count; 
+    randomization_type m_randomizator_type;
     randomizator_base* m_randomizator;
+    alternate_property_type m_alternate_property_type;
     property_counter_base* m_counter;
     unsigned m_current_property_count;
     calculation_results m_results;

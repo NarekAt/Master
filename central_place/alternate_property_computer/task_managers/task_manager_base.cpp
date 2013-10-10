@@ -14,13 +14,15 @@ void task_manager_base::init(const graph_types::undirected_graph& g,
 {
     assert(!m_inited);
     m_inited = true;
-    m_graph = g;
+    m_initial_graph = g;
     m_mu_list = m;
     m_step_count = s_c;
-    m_randomizator = randomizator_factory::get_randomizator(
-        m_graph, r);
-    m_counter = property_counter_factory::get_counter(
-        m_graph, p);
+    m_randomizator_type = r;
+    m_alternate_property_type = p;
+    //m_randomizator = randomizator_factory::get_randomizator(
+    //    m_current_graph, r);
+    //m_counter = property_counter_factory::get_counter(
+    //    m_current_graph, p);
 }
 
 const calculation_results& task_manager_base::get_results() const
@@ -56,7 +58,7 @@ void task_manager_base::calculate_for_single_mu(
     for (int s_i = 1; s_i <= m_step_count; ++s_i) {
         auto step = m_randomizator->get_step();
         for (auto& e : step.first) {
-            boost::remove_edge(e.first, e.second, m_graph);
+            boost::remove_edge(e.first, e.second, m_current_graph);
         }
         unsigned delta = 
             m_counter->compute_increase_after_add(step.second)
@@ -64,11 +66,11 @@ void task_manager_base::calculate_for_single_mu(
         if (check_to_assume_step(delta, mu)) {
             m_current_property_count += delta;
             for (auto& e : step.second) {
-                boost::add_edge(e.first, e.second, m_graph);
+                boost::add_edge(e.first, e.second, m_current_graph);
             }
         } else {
             for (auto& e : step.first) {
-                boost::add_edge(e.first, e.second, m_graph);
+                boost::add_edge(e.first, e.second, m_current_graph);
             }
         }
         if (is_first_pass) {
@@ -82,11 +84,12 @@ void task_manager_base::calculate_for_single_mu(
 }
 
 task_manager_base::task_manager_base(boost::mpi::communicator& world)
-    : m_inited(false), m_world(world), m_pass_count(10)
+    : m_inited(false), m_world(world), m_pass_count(10),
+    m_randomizator(nullptr), m_counter(nullptr)
 {}
 
 task_manager_base::~task_manager_base()
 {
-    delete m_randomizator;
-    delete m_counter;
+    assert(nullptr == m_randomizator);
+    assert(nullptr == m_counter);
 }
