@@ -6,11 +6,14 @@
 #include "task_manager_base.h"
 #include "randomizator_factory.h"
 #include "property_counter_factory.h"
+#include <assert.h>
 
 void task_manager_base::init(const graph_types::undirected_graph& g,
     const mu_list& m, unsigned s_c, const randomization_type r,
     const alternate_property_type p)
 {
+    assert(!m_inited);
+    m_inited = true;
     m_graph = g;
     m_mu_list = m;
     m_step_count = s_c;
@@ -45,6 +48,45 @@ bool task_manager_base::check_to_assume_step(int delta
     return true;
 }
 
+void task_manager_base::calculate_for_single_mu(
+    single_results_list& c_r, double mu, bool is_first_pass)
+{
+    assert(nullptr != m_counter);
+    assert(nullptr != m_randomizator);
+    for (int s_i = 1; s_i <= m_step_count; ++s_i) {
+        auto step = m_randomizator->get_step();
+        for (auto& e : step.first) {
+            boost::remove_edge(e.first, e.second, m_graph);
+        }
+        unsigned delta = 
+            m_counter->compute_increase_after_add(step.second)
+            - m_counter->compute_decrease_after_remove(step.first);
+        if (check_to_assume_step(delta, mu)) {
+            m_current_property_count += delta;
+            for (auto& e : step.second) {
+                boost::add_edge(e.first, e.second, m_graph);
+            }
+        } else {
+            for (auto& e : step.first) {
+                boost::add_edge(e.first, e.second, m_graph);
+            }
+        }
+        if (is_first_pass) {
+            c_r.push_back(std::make_pair(s_i, 
+                static_cast<double>(m_current_property_count)));
+        } else {
+            c_r[s_i].second += 
+                static_cast<double>(m_current_property_count);
+        }
+    }
+}
+
 task_manager_base::task_manager_base(boost::mpi::communicator& world)
-    : m_world(world)
+    : m_inited(false), m_world(world), m_pass_count(10)
 {}
+
+task_manager_base::~task_manager_base()
+{
+    delete m_randomizator;
+    delete m_counter;
+}

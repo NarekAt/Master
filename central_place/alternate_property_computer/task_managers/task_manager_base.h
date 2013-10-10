@@ -46,10 +46,17 @@ protected:
     bool check_to_assume_step(int delta, double mu) const;
 
 protected:
+    void calculate_for_single_mu(single_results_list& c_r,
+        double mu, bool is_first_pass);
+protected:
+    bool m_inited;
     boost::mpi::communicator& m_world;
     graph_types::undirected_graph m_graph;
     mu_list m_mu_list;
     unsigned m_step_count;
+    // TODO: pass count must be got from program arguments.
+    //       for now it will just set to 10.
+    unsigned m_pass_count; 
     randomizator_base* m_randomizator;
     property_counter_base* m_counter;
     unsigned m_current_property_count;
@@ -61,4 +68,10 @@ public:
      * @param world World of mpi
      */
     task_manager_base(boost::mpi::communicator& world);
+
+public:
+    /**
+     * @brief Destructor
+     */
+    virtual ~task_manager_base();
 };

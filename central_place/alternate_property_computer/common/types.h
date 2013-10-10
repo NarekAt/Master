@@ -73,7 +73,8 @@ typedef std::vector<std::pair<int, double>> single_results_list;
  * @brief map from mu value to appropriate vector of pairs:
  *        step number to step property count.
  */
-typedef std::map<double, single_results_list> calculation_results;
+typedef std::vector<std::pair<double, single_results_list>>
+    calculation_results;
 
 namespace graph_types
 {
