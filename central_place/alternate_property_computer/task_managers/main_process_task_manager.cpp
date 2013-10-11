@@ -15,7 +15,7 @@ void main_process_task_manager::run()
     assert(m_inited);
     colculate_process_to_mu_count();
     send_ingredients_to_precesses();
-    // TODO: fill body.
+    revieve_results_from_processes();
 }
 
 void main_process_task_manager::send_ingredients_to_precesses() const
@@ -83,6 +83,36 @@ void main_process_task_manager::colculate_process_to_mu_count()
         for (int i = 0; i < last_mus_count; ++i) {
             ++m_process_to_mu_count[i].second;
         }
+    }
+}
+
+void main_process_task_manager::revieve_results_from_processes()
+{
+    std::vector<boost::mpi::request> requests;
+    unsigned next_tag = MU_START;
+    unsigned mu_i = 0;
+    for (auto& p_to_c : m_process_to_mu_count) {
+        if (0 != p_to_c.second) {
+            int e = mu_i + p_to_c.second;
+            assert(m_mu_list.size() >= e);
+            while (mu_i < e) {
+                m_results.push_back(std::make_pair(
+                    m_mu_list[mu_i], single_results_list()));
+                requests.push_back(boost::mpi::request());
+                requests.back() = m_world.irecv(
+                    p_to_c.first, next_tag, m_results.back()); 
+                ++next_tag;
+                ++mu_i;
+            }
+        }
+    }
+    while (!requests.empty()) {
+        for (int i = requests.size() -1; i >= 0; --i) {
+            if (false == !requests[i].test()) {
+                requests.erase(requests.begin() + i);
+            }
+        }
+        usleep(100);
     }
 }
 

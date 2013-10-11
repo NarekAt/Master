@@ -48,6 +48,33 @@ bool task_manager_base::check_to_assume_step(int delta
     return true;
 }
 
+void task_manager_base::calculate_for_single_mu_by_pass_count(
+    single_results_list& c_r, double mu)
+{
+    for (int p_c = 0; p_c < m_pass_count; ++p_c) { 
+        m_current_graph = m_initial_graph;
+        assert(nullptr == m_randomizator);
+        assert(nullptr == m_counter);
+        m_randomizator = randomizator_factory::get_randomizator(
+            m_current_graph, m_randomizator_type);
+        m_counter = property_counter_factory::get_counter(
+            m_current_graph, m_alternate_property_type);
+        m_current_property_count = m_counter->compute_initial_count();
+        if (0 == p_c) {
+            c_r.push_back(std::make_pair(0, 
+                static_cast<double>(m_current_property_count)));
+        }
+        calculate_for_single_mu(c_r, mu, 0 == p_c);
+        delete m_randomizator;
+        m_randomizator = nullptr;
+        delete m_counter;
+        m_counter = nullptr;
+    }
+    for (auto r : c_r) {
+        r.second /= m_pass_count;
+    }
+}
+
 void task_manager_base::calculate_for_single_mu(
     single_results_list& c_r, double mu, bool is_first_pass)
 {

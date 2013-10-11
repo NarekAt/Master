@@ -30,6 +30,11 @@ private:
 private:
     tag_to_mu_map m_taged_mus;
 
+private:
+    /**
+     * @brief Calculates and sends calculation results.
+     */
+    void calculate_and_send();
 public:
     /**
      * @brief Constructor

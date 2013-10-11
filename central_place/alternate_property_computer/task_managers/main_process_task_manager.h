@@ -43,6 +43,12 @@ private:
     void colculate_process_to_mu_count();
 
 private:
+    /**
+     * @brief Recieves results from secondary processes.
+     */
+    void revieve_results_from_processes();
+
+private:
     process_to_mu_count m_process_to_mu_count;
 
 public:

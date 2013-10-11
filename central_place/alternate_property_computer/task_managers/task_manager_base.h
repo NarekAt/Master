@@ -46,8 +46,13 @@ protected:
     bool check_to_assume_step(int delta, double mu) const;
 
 protected:
+    void calculate_for_single_mu_by_pass_count(
+        single_results_list& c_r, double mu);
+
+protected:
     void calculate_for_single_mu(single_results_list& c_r,
         double mu, bool is_first_pass);
+    
 protected:
     enum mpi_tag {
         PROCESS_IS_NEEDED = 1,

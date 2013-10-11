@@ -12,7 +12,11 @@
 
 void secondary_process_task_manager::run()
 {
-    // TODO: fill body.
+    bool am_i_needed = receive_ingredients();
+    if (!am_i_needed) {
+        return;
+    }
+    calculate_and_send();
 }
 
 bool secondary_process_task_manager::receive_ingredients()
@@ -34,6 +38,20 @@ bool secondary_process_task_manager::receive_ingredients()
         ap_type);
     m_world.recv(0, MUS, m_taged_mus);
     return true;
+}
+
+void secondary_process_task_manager::calculate_and_send()
+{
+    std::vector<boost::mpi::request> requests;
+    for (auto t_m : m_taged_mus) {
+        m_results.push_back(std::make_pair(
+            t_m.second, single_results_list()));
+        auto& c_r = m_results.back();
+        calculate_for_single_mu_by_pass_count(c_r.second, t_m.second);
+        requests.push_back(boost::mpi::request());
+        requests.back() = m_world.isend(0, t_m.first, c_r); 
+    }
+    boost::mpi::wait_all(requests.begin(), requests.end());
 }
 
 secondary_process_task_manager::secondary_process_task_manager(
