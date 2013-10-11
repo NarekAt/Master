@@ -6,6 +6,8 @@
 #include "task_manager_base.h"
 #include "randomizator_factory.h"
 #include "property_counter_factory.h"
+#include <thread>
+#include <system_error>
 #include <assert.h>
 
 void task_manager_base::init(const graph_types::undirected_graph& g,
@@ -19,10 +21,6 @@ void task_manager_base::init(const graph_types::undirected_graph& g,
     m_step_count = s_c;
     m_randomizator_type = r;
     m_alternate_property_type = p;
-    //m_randomizator = randomizator_factory::get_randomizator(
-    //    m_current_graph, r);
-    //m_counter = property_counter_factory::get_counter(
-    //    m_current_graph, p);
 }
 
 const calculation_results& task_manager_base::get_results() const
@@ -60,9 +58,23 @@ void task_manager_base::calculate_for_single_mu(
         for (auto& e : step.first) {
             boost::remove_edge(e.first, e.second, m_current_graph);
         }
-        unsigned delta = 
-            m_counter->compute_increase_after_add(step.second)
-            - m_counter->compute_decrease_after_remove(step.first);
+        unsigned d = 0;
+        std::thread* t = nullptr;
+        try {
+            t = new std::thread([&]() {
+                d = m_counter->compute_decrease_after_remove(
+                    step.first);
+            });
+        } catch (std::system_error&) {
+            d = m_counter->compute_decrease_after_remove(step.first);
+        }
+        unsigned i =
+            m_counter->compute_increase_after_add(step.second);
+        if (nullptr != t) {
+            t->join();
+            delete t;
+        }
+        unsigned delta = i - d;
         if (check_to_assume_step(delta, mu)) {
             m_current_property_count += delta;
             for (auto& e : step.second) {

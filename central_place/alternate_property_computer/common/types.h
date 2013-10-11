@@ -62,12 +62,22 @@ alternate_property_type get_alternate_property_type_by_name(
 /**
  * @brief mu values list.
  */
-typedef std::list<double> mu_list;
+typedef std::vector<double> mu_list;
+
+/**
+ * @brief process id to mu count map.
+ */
+typedef std::vector<std::pair<unsigned, unsigned>> process_to_mu_count;
+
+/**
+ * @brief mpi tag to mu vector.
+ */
+typedef std::vector<std::pair<unsigned, double>> tag_to_mu_map;
 
 /**
  * @brief vector of pairs: step number to setp property count.
  */
-typedef std::vector<std::pair<int, double>> single_results_list;
+typedef std::vector<std::pair<unsigned, double>> single_results_list;
 
 /**
  * @brief map from mu value to appropriate vector of pairs:

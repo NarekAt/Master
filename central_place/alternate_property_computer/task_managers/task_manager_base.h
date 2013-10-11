@@ -49,6 +49,18 @@ protected:
     void calculate_for_single_mu(single_results_list& c_r,
         double mu, bool is_first_pass);
 protected:
+    enum mpi_tag {
+        PROCESS_IS_NEEDED = 1,
+        GRAPH = 2,
+        STEP_COUNT = 3,
+        PASS_COUNT = 4,
+        RANDOMIZATION_TYPE = 5,
+        ALTERNATE_PROPERTY_TYPE = 6,
+        MUS = 7,
+        MU_START = 100
+    };
+
+protected:
     bool m_inited;
     boost::mpi::communicator& m_world;
     graph_types::undirected_graph m_initial_graph;
