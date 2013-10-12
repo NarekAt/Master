@@ -8,6 +8,8 @@
 #include "types.h"
 #include <boost/mpi.hpp>
 
+class task_manager_base;
+
 /**
  * @class mediator
  * @brief this class is used for managing interaction
@@ -32,7 +34,16 @@ public:
      * @param world mpi communicator.
      * @note Before call of this function init() must be called.
      */
-    void run(const boost::mpi::communicator& world);
+    void run(boost::mpi::communicator& world);
+
+private:
+    /**
+     * @brief Uses task manager for initing it, run, get result
+     *        and send results to output.
+     * @param t_m Task manager
+     * @pre must not be used for secondary process task manager.
+     */
+    void run_task_manager_and_send_to_output(task_manager_base& t_m);
 
 private:
     bool m_inited;

@@ -5,6 +5,9 @@
 
 #include "mediator.h"
 #include "erdos_renyi_reader.h"
+#include "single_process_task_manager.h"
+#include "main_process_task_manager.h"
+#include "secondary_process_task_manager.h"
 #include <assert.h>
 
 mediator* mediator::s_instance = nullptr;
@@ -45,13 +48,32 @@ void mediator::init(const arg_name_to_value_map& a_n_v)
     } catch (const boost::bad_any_cast&) {
         assert(!"bad any cast");
     }
-    // TODO: fill body.
 }
 
-void mediator::run(const boost::mpi::communicator& world)
+void mediator::run(boost::mpi::communicator& world)
 {
     assert(m_inited);
-    // TODO: fill body.
+    if (1 == world.size()) {
+        single_process_task_manager t_m(world);
+        run_task_manager_and_send_to_output(t_m);
+    } else {
+        if (0 == world.rank()) {
+            main_process_task_manager t_m(world);
+            run_task_manager_and_send_to_output(t_m);
+        } else {
+            secondary_process_task_manager t_m(world);
+            t_m.run();
+        }
+    }
+}
+
+void mediator::run_task_manager_and_send_to_output(
+    task_manager_base& t_m)
+{
+    t_m.init(m_graph, m_mu_list, m_step_count,
+        m_randomization_type, m_alternate_property_type);
+    t_m.run();
+    // TODO: Send to output results t_m.get_results()
 }
 
 mediator& mediator::get_instance()
