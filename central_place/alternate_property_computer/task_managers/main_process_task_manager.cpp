@@ -9,6 +9,7 @@
 #include <boost/graph/adj_list_serialize.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/utility.hpp>
+#include <iostream>
 
 void main_process_task_manager::run()
 {
@@ -79,6 +80,7 @@ void main_process_task_manager::colculate_process_to_mu_count()
         while (c_p < m_world.size()) {
             m_process_to_mu_count.push_back(std::make_pair(
                 c_p, mu_per_process));
+            ++c_p;
         }
         for (int i = 0; i < last_mus_count; ++i) {
             ++m_process_to_mu_count[i].second;
@@ -88,6 +90,7 @@ void main_process_task_manager::colculate_process_to_mu_count()
 
 void main_process_task_manager::revieve_results_from_processes()
 {
+    m_results.reserve(m_mu_list.size());
     std::vector<boost::mpi::request> requests;
     unsigned next_tag = MU_START;
     unsigned mu_i = 0;
@@ -107,7 +110,7 @@ void main_process_task_manager::revieve_results_from_processes()
         }
     }
     while (!requests.empty()) {
-        for (int i = requests.size() -1; i >= 0; --i) {
+        for (int i = requests.size() - 1; i >= 0; --i) {
             if (false == !requests[i].test()) {
                 requests.erase(requests.begin() + i);
             }

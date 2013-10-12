@@ -83,6 +83,7 @@ arg_name_to_value_map argument_parser::parse_and_get_args(
         boost::program_options::notify(vm);
     } catch (const boost::program_options::error& e) {
         // TODO: Change cout to log.
+        std::cerr << "\nError parsing command line: " << e.what() << std::endl << std::endl;
         std::cout << m_options_description;
         // TODO throw exception.
     }   // TODO: catch parsing exception and throw up.

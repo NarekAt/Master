@@ -9,6 +9,7 @@
 #include <boost/graph/adj_list_serialize.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/utility.hpp>
+#include <iostream>
 
 void secondary_process_task_manager::run()
 {

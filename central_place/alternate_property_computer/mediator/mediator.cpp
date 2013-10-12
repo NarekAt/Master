@@ -8,6 +8,8 @@
 #include "single_process_task_manager.h"
 #include "main_process_task_manager.h"
 #include "secondary_process_task_manager.h"
+#include "results_writer.h"
+#include <iostream>
 #include <assert.h>
 
 mediator* mediator::s_instance = nullptr;
@@ -73,7 +75,8 @@ void mediator::run_task_manager_and_send_to_output(
     t_m.init(m_graph, m_mu_list, m_step_count,
         m_randomization_type, m_alternate_property_type);
     t_m.run();
-    // TODO: Send to output results t_m.get_results()
+    results_writer w;
+    w.write(t_m.get_results(), m_vertex_count, m_probability);
 }
 
 mediator& mediator::get_instance()

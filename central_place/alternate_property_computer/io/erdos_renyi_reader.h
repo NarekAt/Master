@@ -39,5 +39,5 @@ public:
      * @param[out] p Probability to be red.
      */
     void get_graph_and_properties_from_file(const std::string& f_n,
-        graph_types::undirected_graph& graph, int& v_c, double& p);
+        graph_types::undirected_graph& graph, unsigned& v_c, double& p);
 };
