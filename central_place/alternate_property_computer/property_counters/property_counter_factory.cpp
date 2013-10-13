@@ -1,6 +1,6 @@
 /**
  * @file property_counters/property_counter_factory.cpp
- * @description definition of property_counter_factory class
+ * @brief definition of property_counter_factory class
  */
 
 #include "property_counter_factory.h"

@@ -1,6 +1,6 @@
 /**
  * @file io/erdos_renyi_reader.h
- * @description declaration of erdos_renyi_reader class
+ * @brief declaration of erdos_renyi_reader class
  */
 
 #pragma once

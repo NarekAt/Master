@@ -1,6 +1,6 @@
 /**
  * @file io/erdos_renyi_reader.cpp
- * @description definition of erdos_renyi_reader class
+ * @brief definition of erdos_renyi_reader class
  */
 
 #include "erdos_renyi_reader.h"

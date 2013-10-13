@@ -1,6 +1,6 @@
 /**
  * @file io/results_writer.h
- * @description declaration of results_writer class
+ * @brief declaration of results_writer class
  */
 
 #pragma once

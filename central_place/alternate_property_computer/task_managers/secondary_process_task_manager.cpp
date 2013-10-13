@@ -1,6 +1,6 @@
 /**
  * @file task_managers/secondary_process_task_manager.cpp
- * @description definition of secondary_process_task_manager class.
+ * @brief definition of secondary_process_task_manager class.
  */
 
 #include "secondary_process_task_manager.h"

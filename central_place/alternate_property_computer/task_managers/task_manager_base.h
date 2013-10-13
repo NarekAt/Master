@@ -1,6 +1,6 @@
 /**
  * @file task_managers/task_manager_base.h
- * @description declaration of task_manager_base class.
+ * @brief declaration of task_manager_base class.
  */
 
 #pragma once

@@ -1,6 +1,6 @@
 /**
  * @file common/utility.cpp
- * @description definitions of utility functions
+ * @brief definitions of utility functions
  */
 
 #include "utility.h"

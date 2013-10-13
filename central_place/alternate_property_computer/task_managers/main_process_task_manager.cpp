@@ -1,6 +1,6 @@
 /**
  * @file task_managers/main_process_task_manager.cpp
- * @description definition of main_process_task_manager class.
+ * @brief definition of main_process_task_manager class.
  */
 
 #include "main_process_task_manager.h"

@@ -1,6 +1,6 @@
 /**
  * @file common/types.cpp
- * @description definitions of functions which works with common types.
+ * @brief definitions of functions which works with common types.
  */
 
 #include "types.h"

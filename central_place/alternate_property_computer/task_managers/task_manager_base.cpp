@@ -1,6 +1,6 @@
 /**
  * @file task_managers/task_manager_base.cpp
- * @description definition of task_manager_base class.
+ * @brief definition of task_manager_base class.
  */
 
 #include "task_manager_base.h"

@@ -1,6 +1,6 @@
 /**
  * @file mediator/mediator.cpp
- * @description definition of class mediator.
+ * @brief definition of class mediator.
  */
 
 #include "mediator.h"

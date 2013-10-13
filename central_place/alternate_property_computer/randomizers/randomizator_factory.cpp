@@ -1,6 +1,6 @@
 /**
- * @file randomizators/randomizator_factory.cpp
- * @description definition of randomizator_factory class
+ * @file randomizers/randomizator_factory.cpp 
+ * @brief definition of randomizator_factory class
  */
 
 #include "randomizator_factory.h"

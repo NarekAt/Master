@@ -1,6 +1,6 @@
 /**
  * @file task_managers/single_process_task_manager.h
- * @description declaration of single_process_task_manager class.
+ * @brief declaration of single_process_task_manager class.
  */
 
 #pragma once

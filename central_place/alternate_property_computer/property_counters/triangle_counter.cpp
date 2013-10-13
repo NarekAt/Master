@@ -1,6 +1,6 @@
 /**
  * @file property_counters/triangle_counter.cpp
- * @description definition of triangle_counter class.
+ * @brief definition of triangle_counter class.
  */
 
 #include "triangle_counter.h"

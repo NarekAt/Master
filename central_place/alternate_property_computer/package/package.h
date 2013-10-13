@@ -1,6 +1,6 @@
 /**
  * @file package/package.h
- * @description declaration of package class.
+ * @brief declaration of package class.
  */
 
 #pragma once

@@ -1,6 +1,6 @@
 /**
  * @file property_counters/triangle_counter.h
- * @description declaration of triangle_counter class.
+ * @brief declaration of triangle_counter class.
  */
 
 #pragma once

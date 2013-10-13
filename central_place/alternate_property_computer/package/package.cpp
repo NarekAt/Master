@@ -1,6 +1,6 @@
 /**
  * @file package/package.cpp
- * @description definition of package class.
+ * @brief definition of package class.
  */
 
 #include "package.h"

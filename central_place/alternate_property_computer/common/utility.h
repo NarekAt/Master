@@ -1,6 +1,6 @@
 /**
  * @file common/utility.h
- * @description declarations of utility functions
+ * @brief declarations of utility functions
  */
 
 #pragma once

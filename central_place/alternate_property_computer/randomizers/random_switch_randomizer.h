@@ -1,6 +1,6 @@
 /**
  * @file randomizers/random_switch_randomizer.h
- * @description declaration of class random_switch_randomizer
+ * @brief declaration of class random_switch_randomizer
  */
 
 #pragma once

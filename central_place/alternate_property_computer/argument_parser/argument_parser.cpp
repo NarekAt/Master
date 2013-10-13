@@ -1,6 +1,6 @@
 /**
  * @file argument_parser/argument_parser.cpp
- * @description definition of class argument_parser.
+ * @brief definition of class argument_parser.
  */
 
 #include "argument_parser.h"

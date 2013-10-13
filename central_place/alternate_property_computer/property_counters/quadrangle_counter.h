@@ -1,6 +1,6 @@
 /**
  * @file property_counters/quadrangle_counter.h
- * @description declaration of quadrangle_counter class.
+ * @brief declaration of quadrangle_counter class.
  */
 
 #pragma once

@@ -1,6 +1,6 @@
 /**
- * @file randomizators/randomizator_factory.h
- * @description declaration of randomizator_factory class
+ * @file randomizers/randomizator_factory.h 
+ * @brief declaration of randomizator_factory class
  */
 
 #pragma once

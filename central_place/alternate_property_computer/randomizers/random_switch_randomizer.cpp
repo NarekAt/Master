@@ -1,6 +1,6 @@
 /**
  * @file randomizers/random_switch_randomizer.h
- * @description definition of class random_switch_randomizer
+ * @brief definition of class random_switch_randomizer
  */
 
 #include "random_switch_randomizer.h"

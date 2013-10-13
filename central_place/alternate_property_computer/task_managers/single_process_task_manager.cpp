@@ -1,6 +1,6 @@
 /**
  * @file task_managers/single_process_task_manager.cpp
- * @description definition of single_process_task_manager class.
+ * @brief definition of single_process_task_manager class.
  */
 
 #include "single_process_task_manager.h"

@@ -1,6 +1,6 @@
 /**
  * @file randomizers/fixed_degree_randomizer.h
- * @description declaration of class fixed_degree_randomizer
+ * @brief declaration of class fixed_degree_randomizer
  */
 
 #pragma once

@@ -1,6 +1,6 @@
 /**
  * @file mediator/mediator.h
- * @description declaration of class mediator.
+ * @brief declaration of class mediator.
  */
 
 #pragma once

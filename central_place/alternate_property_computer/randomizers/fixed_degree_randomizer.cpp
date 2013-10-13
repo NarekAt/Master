@@ -1,6 +1,6 @@
 /**
  * @file randomizers/fixed_degree_randomizer.h
- * @description definition of class fixed_degree_randomizer
+ * @brief definition of class fixed_degree_randomizer
  */
 
 #include "fixed_degree_randomizer.h"

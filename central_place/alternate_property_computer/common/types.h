@@ -1,6 +1,6 @@
 /**
  * @file common/types.h
- * @description common typedefs enums e.t.c
+ * @brief common typedefs enums e.t.c
  */
 
 #pragma once

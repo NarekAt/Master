@@ -1,6 +1,6 @@
 /**
  * @file property_counters/quadrangle_counter.cpp
- * @description definition of quadrangle_counter class.
+ * @brief definition of quadrangle_counter class.
  */
 
 #include "quadrangle_counter.h"

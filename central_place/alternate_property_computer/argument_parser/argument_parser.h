@@ -1,6 +1,6 @@
 /**
  * @file argument_parser/argument_parser.h
- * @description declaration of class argument_parser.
+ * @brief declaration of class argument_parser.
  */
 
 #pragma once

@@ -1,6 +1,6 @@
 /**
  * @file property_counters/property_counter_factory.h
- * @description declaration of property_counter_factory class
+ * @brief declaration of property_counter_factory class
  */
 
 #pragma once

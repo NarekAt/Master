@@ -1,6 +1,6 @@
 /**
  * @file io/results_writer.cpp
- * @description definition of results_writer class
+ * @brief definition of results_writer class
  */
 
 #include "results_writer.h"
