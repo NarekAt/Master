@@ -16,6 +16,11 @@ static type_to_property_counter s_type_to_property_counter = {
         [] (const graph_types::undirected_graph& g) -> 
             property_counter_base* {
             return new triangle_counter(g);
+        }),
+    std::make_pair(QUADRANGLE_COUNT,
+        [] (const graph_types::undirected_graph& g) -> 
+            property_counter_base* {
+            return new quadrangle_counter(g);
         })
 };
 

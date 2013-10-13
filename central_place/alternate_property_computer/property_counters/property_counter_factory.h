@@ -7,6 +7,7 @@
 
 #include "types.h"
 #include "triangle_counter.h"
+#include "quadrangle_counter.h"
 
 /**
  * @class property_counter_factory

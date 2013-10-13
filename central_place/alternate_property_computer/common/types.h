@@ -47,6 +47,7 @@ randomization_type get_randomization_type_by_name(
  */
 enum alternate_property_type {
     TRIANGLE_COUNT,
+    QUADRANGLE_COUNT,
     INVALID_APT
 };
 
