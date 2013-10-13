@@ -46,5 +46,5 @@ public:
      * @brief Constructor
      * @param graph Graph for computing quadrangle count.
      */
-    quadrangle_counter(const graph_types::undirected_graph& graph);
+    quadrangle_counter(graph_types::undirected_graph& graph);
 };

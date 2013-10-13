@@ -24,6 +24,6 @@ public:
      * @note Got pointer must be deleted after use.
      */
     static property_counter_base* get_counter(
-        const graph_types::undirected_graph& graph,
+        graph_types::undirected_graph& graph,
         alternate_property_type t);
 };

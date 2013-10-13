@@ -44,14 +44,14 @@ public:
     virtual alternate_property_type get_type() const = 0;
 
 protected:
-    const graph_types::undirected_graph& m_graph;
+    graph_types::undirected_graph& m_graph;
 
 public:
     /**
      * @brief Constructor
      * @param graph Graph for counting property.
      */
-    property_counter_base(const graph_types::undirected_graph& graph)
+    property_counter_base(graph_types::undirected_graph& graph)
         : m_graph(graph)
     {}
 };

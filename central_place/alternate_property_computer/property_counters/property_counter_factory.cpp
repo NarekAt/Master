@@ -8,24 +8,24 @@
 #include <functional>
 
 typedef std::map<alternate_property_type, std::function<
-    property_counter_base* (const graph_types::undirected_graph& g)>>
+    property_counter_base* (graph_types::undirected_graph& g)>>
         type_to_property_counter;
 
 static type_to_property_counter s_type_to_property_counter = {
     std::make_pair(TRIANGLE_COUNT,
-        [] (const graph_types::undirected_graph& g) -> 
+        [] (graph_types::undirected_graph& g) -> 
             property_counter_base* {
             return new triangle_counter(g);
         }),
     std::make_pair(QUADRANGLE_COUNT,
-        [] (const graph_types::undirected_graph& g) -> 
+        [] (graph_types::undirected_graph& g) -> 
             property_counter_base* {
             return new quadrangle_counter(g);
         })
 };
 
 property_counter_base* property_counter_factory::get_counter(
-    const graph_types::undirected_graph& graph,
+    graph_types::undirected_graph& graph,
     alternate_property_type t)
 {
     auto it = s_type_to_property_counter.find(t);

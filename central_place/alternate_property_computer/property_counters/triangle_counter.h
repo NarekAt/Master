@@ -46,5 +46,5 @@ public:
      * @brief Constructor
      * @param graph Graph for computing triangle count.
      */
-    triangle_counter(const graph_types::undirected_graph& graph);
+    triangle_counter(graph_types::undirected_graph& graph);
 };

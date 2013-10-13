@@ -6,7 +6,6 @@
 #include "task_manager_base.h"
 #include "randomizator_factory.h"
 #include "property_counter_factory.h"
-#include <thread>
 #include <system_error>
 #include <assert.h>
 
@@ -82,25 +81,15 @@ void task_manager_base::calculate_for_single_mu(
     assert(nullptr != m_randomizator);
     for (int s_i = 1; s_i <= m_step_count; ++s_i) {
         auto step = m_randomizator->get_step();
-        for (auto& e : step.first) {
-            boost::remove_edge(e.first, e.second, m_current_graph);
-        }
-        unsigned d = 0;
-        std::thread* t = nullptr;
-        try {
-            t = new std::thread([&]() {
-                d = m_counter->compute_decrease_after_remove(
-                    step.first);
-            });
-        } catch (std::system_error&) {
-            d = m_counter->compute_decrease_after_remove(step.first);
+        unsigned d = m_counter->compute_decrease_after_remove(
+            step.first);
+        // edges must be added befor calling function:
+        // compute_increase_after_add(<added_edges>).
+        for (auto& e : step.second) {
+            boost::add_edge(e.first, e.second, m_current_graph);
         }
         unsigned i =
             m_counter->compute_increase_after_add(step.second);
-        if (nullptr != t) {
-            t->join();
-            delete t;
-        }
         unsigned delta = i - d;
         if (check_to_assume_step(delta, mu)) {
             m_current_property_count += delta;
