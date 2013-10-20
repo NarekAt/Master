@@ -1,6 +1,7 @@
 /**
  * @file main/main.cpp
  * @brief Contains main(...) function call
+ */
 #include "package.h"
 #include "argument_parser.h"
 #include "mediator.h"
