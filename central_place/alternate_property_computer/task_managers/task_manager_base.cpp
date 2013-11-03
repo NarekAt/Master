@@ -8,6 +8,7 @@
 #include "property_counter_factory.h"
 #include <system_error>
 #include <assert.h>
+#include <iostream>
 
 void task_manager_base::init(const graph_types::undirected_graph& g,
     const mu_list& m, unsigned s_c, const randomization_type r,
@@ -20,6 +21,17 @@ void task_manager_base::init(const graph_types::undirected_graph& g,
     m_step_count = s_c;
     m_randomizator_type = r;
     m_alternate_property_type = p;
+    assert(nullptr == m_counter);
+    // Computing initial alternate property count of the graph.
+    m_counter = property_counter_factory::get_counter(
+        m_initial_graph, m_alternate_property_type);
+    m_initial_property_count = m_counter->compute_initial_count();
+    // TODO: change cout to log.
+    std::cout << "\nGraph initial " << 
+        get_alternate_property_name_by_type(m_alternate_property_type) <<
+        " computed: " << m_initial_property_count << std::endl;
+    delete m_counter;
+    m_counter = nullptr;
 }
 
 const calculation_results& task_manager_base::get_results() const
@@ -58,7 +70,7 @@ void task_manager_base::calculate_for_single_mu_by_pass_count(
             m_current_graph, m_randomizator_type);
         m_counter = property_counter_factory::get_counter(
             m_current_graph, m_alternate_property_type);
-        m_current_property_count = m_counter->compute_initial_count();
+        m_current_property_count = m_initial_property_count; 
         if (0 == p_c) {
             c_r.push_back(std::make_pair(0, 
                 static_cast<double>(m_current_property_count)));

@@ -40,6 +40,13 @@ randomization_type get_randomization_type_by_name(
     const std::string& t_n);
 
 /**
+ * @brief Gets randomization type name by value.
+ * @param t Randomization type.
+ */
+std::string get_randomization_name_by_type(
+    randomization_type t);
+
+/**
  * @enum alternate_property_type
  * @brief This type shows what property to compute from graphs.
  * @note INVALID_APT value notifies that
@@ -59,6 +66,13 @@ enum alternate_property_type {
  */
 alternate_property_type get_alternate_property_type_by_name(
     const std::string& t_n);
+
+/**
+ * @brief Gets alternate property type name by value.
+ * @param t Aternate property type.
+ */
+std::string get_alternate_property_name_by_type(
+    alternate_property_type t);
 
 /**
  * @brief mu values list.

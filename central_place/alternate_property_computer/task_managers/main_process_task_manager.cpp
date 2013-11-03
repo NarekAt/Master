@@ -49,6 +49,8 @@ void main_process_task_manager::send_ingredients(
     }
     m_world.send(p_id, PROCESS_IS_NEEDED, true);
     m_world.send(p_id, GRAPH, m_initial_graph);
+    m_world.send(p_id, ALTERNATE_PROPERTY_INITIAL_COUNT,
+        m_initial_property_count);
     m_world.send(p_id, STEP_COUNT, m_step_count);
     m_world.send(p_id, PASS_COUNT, m_pass_count);
     m_world.send(p_id, RANDOMIZATION_TYPE,
@@ -91,7 +93,7 @@ void main_process_task_manager::colculate_process_to_mu_count()
 void main_process_task_manager::revieve_results_from_processes()
 {
     m_results.reserve(m_mu_list.size());
-    std::vector<boost::mpi::request> requests;
+    std::vector<std::pair<boost::mpi::request, double>> requests;
     unsigned next_tag = MU_START;
     unsigned mu_i = 0;
     for (auto& p_to_c : m_process_to_mu_count) {
@@ -101,8 +103,9 @@ void main_process_task_manager::revieve_results_from_processes()
             while (mu_i < e) {
                 m_results.push_back(std::make_pair(
                     m_mu_list[mu_i], single_results_list()));
-                requests.push_back(boost::mpi::request());
-                requests.back() = m_world.irecv(
+                requests.push_back(std::make_pair(
+                    boost::mpi::request(), m_mu_list[mu_i]));
+                requests.back().first = m_world.irecv(
                     p_to_c.first, next_tag, m_results.back()); 
                 ++next_tag;
                 ++mu_i;
@@ -111,7 +114,10 @@ void main_process_task_manager::revieve_results_from_processes()
     }
     while (!requests.empty()) {
         for (int i = requests.size() - 1; i >= 0; --i) {
-            if (false == !requests[i].test()) {
+            if (false == !requests[i].first.test()) {
+                // TODO: change cout to log.
+                std::cout << "\nCalculation for mu: " <<
+                    requests[i].second << " finished.\n";
                 requests.erase(requests.begin() + i);
             }
         }

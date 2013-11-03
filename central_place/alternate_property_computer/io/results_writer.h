@@ -30,9 +30,11 @@ public:
 private:
     /**
      * @brief Prepares output directory.
+     * @param n Vertex count of graph
+     * @param p Probability of Erdos-Renyi graph
      * @return Returns false if praparing faild.
      */
-    bool prepare_output_directory();
+    bool prepare_output_directory(unsigned n, double p);
 
 private:
     /**

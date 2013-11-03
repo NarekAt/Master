@@ -13,7 +13,7 @@
 void results_writer::write(const calculation_results& r,
     unsigned n, double p)
 {
-    if (!prepare_output_directory()) {
+    if (!prepare_output_directory(n, p)) {
         // TODO: throw exception.
         return; // dont forget to remove, 
                 // after throw part will be implemented.
@@ -49,7 +49,7 @@ std::string get_time_name_of_folder()
 
 }
 
-bool results_writer::prepare_output_directory()
+bool results_writer::prepare_output_directory(unsigned n, double p)
 {
     m_directory_name = "global_results";
     if (!if_dir_dont_exists_then_create(m_directory_name)) {
@@ -61,7 +61,8 @@ bool results_writer::prepare_output_directory()
         return false;
     }
     m_directory_name += std::string("/") +
-        get_time_name_of_folder();
+        get_time_name_of_folder() + "_N" + std::to_string(n) +
+        "_p" + std::to_string(p);
     if (!if_dir_dont_exists_then_create(m_directory_name)) {
         return false;
     }
@@ -72,9 +73,8 @@ void results_writer::write_single_results_list(
     const single_results_list& r,
     unsigned n, double p, double mu) const
 {
-    std::string file_name = m_directory_name + "/" + "N" + std::to_string(n)
-        + "_p" + std::to_string(p) + 
-        "_mu" + std::to_string(mu) + ".txt";
+    std::string file_name = m_directory_name + "/" + 
+        "mu" + std::to_string(mu) + ".txt";
     auto f = boost::filesystem::status(file_name);
     if (boost::filesystem::exists(f)) {
         if (!boost::filesystem::is_regular_file(f)) {
@@ -95,4 +95,7 @@ void results_writer::write_single_results_list(
         output << n_r.first << " " << n_r.second << std::endl;
     }
     output.close();
+    // TODO: change cout to log.
+    std::cout << "\nWriting Results for mu: " << mu <<
+        " finished.\n";
 }

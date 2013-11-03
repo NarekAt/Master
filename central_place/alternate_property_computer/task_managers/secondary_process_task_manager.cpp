@@ -28,6 +28,8 @@ bool secondary_process_task_manager::receive_ingredients()
         return false;
     }
     m_world.recv(0, GRAPH, m_initial_graph);
+    m_world.recv(0, ALTERNATE_PROPERTY_INITIAL_COUNT,
+        m_initial_property_count);
     m_world.recv(0, STEP_COUNT, m_step_count);
     m_world.recv(0, PASS_COUNT, m_pass_count);
     int r_type = 0;

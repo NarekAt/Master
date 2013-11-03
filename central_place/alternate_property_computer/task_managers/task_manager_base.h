@@ -57,11 +57,12 @@ protected:
     enum mpi_tag {
         PROCESS_IS_NEEDED = 1,
         GRAPH = 2,
-        STEP_COUNT = 3,
-        PASS_COUNT = 4,
-        RANDOMIZATION_TYPE = 5,
-        ALTERNATE_PROPERTY_TYPE = 6,
-        MUS = 7,
+        ALTERNATE_PROPERTY_INITIAL_COUNT = 3,
+        STEP_COUNT = 4,
+        PASS_COUNT = 5,
+        RANDOMIZATION_TYPE = 6,
+        ALTERNATE_PROPERTY_TYPE = 7,
+        MUS = 8,
         MU_START = 100
     };
 
@@ -79,6 +80,7 @@ protected:
     randomizator_base* m_randomizator;
     alternate_property_type m_alternate_property_type;
     property_counter_base* m_counter;
+    unsigned m_initial_property_count;
     unsigned m_current_property_count;
     calculation_results m_results;
 
