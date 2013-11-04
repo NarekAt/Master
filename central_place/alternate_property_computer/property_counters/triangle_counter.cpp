@@ -22,18 +22,9 @@ unsigned triangle_counter::compute_initial_count() const
         boost::tie(vsi, vsi_end) = 
             boost::adjacent_vertices(vs, m_graph);
         for(; vsi != vsi_end; ++vsi) {
-            /**
-             * TODO: make faster, by not iterating on vertices of
-             *       vt, just check, 
-             *       boost::edge(vsi, vt, m_graph).second
-             */
-            boost::tie(vti, vti_end) = 
-                boost::adjacent_vertices(vt, m_graph);
-            for(; vti != vti_end; ++vti) {
-                if(*vsi == *vti)
-                {
-                    ++num;
-                }
+            if (*vsi != vt &&
+                true == boost::edge(*vsi, vt, m_graph).second) {
+                ++num;
             }
         }
     }

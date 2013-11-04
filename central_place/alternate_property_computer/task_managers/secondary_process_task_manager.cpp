@@ -45,6 +45,7 @@ bool secondary_process_task_manager::receive_ingredients()
 
 void secondary_process_task_manager::calculate_and_send()
 {
+    calculate_initial_non_existing_edges();
     std::vector<boost::mpi::request> requests;
     for (auto t_m : m_taged_mus) {
         m_results.push_back(std::make_pair(

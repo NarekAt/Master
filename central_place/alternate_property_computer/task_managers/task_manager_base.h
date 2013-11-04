@@ -52,7 +52,13 @@ protected:
 protected:
     void calculate_for_single_mu(single_results_list& c_r,
         double mu, bool is_first_pass);
-    
+
+protected:
+    void calculate_initial_non_existing_edges();
+
+private:
+    void calculate_initial_alternate_property_count();
+
 protected:
     enum mpi_tag {
         PROCESS_IS_NEEDED = 1,
@@ -82,6 +88,8 @@ protected:
     property_counter_base* m_counter;
     unsigned m_initial_property_count;
     unsigned m_current_property_count;
+    graph_types::sequent_null_edges m_initial_non_existing_edges;
+    graph_types::sequent_null_edges m_current_non_existing_edges;
     calculation_results m_results;
 
 public:

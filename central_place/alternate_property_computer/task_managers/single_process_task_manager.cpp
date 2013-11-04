@@ -10,6 +10,7 @@
 void single_process_task_manager::run()
 {
     assert(m_inited);
+    calculate_initial_non_existing_edges();
     for (auto& mu : m_mu_list) {
         single_results_list c_r;
         calculate_for_single_mu_by_pass_count(c_r, mu);

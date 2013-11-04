@@ -10,14 +10,6 @@
 remove_add_edges_pair fixed_degree_randomizer::get_step()
 {
     remove_add_edges_pair r_a_p;
-    int vertices_count = boost::num_vertices(m_graph);
-    int all_edges_count = vertices_count * (vertices_count - 1) / 2;
-    int existing_edges_count = boost::num_edges(m_graph);
-    int non_existing_edges_count = 
-        all_edges_count - existing_edges_count;
-    if (0 == non_existing_edges_count || 0 == existing_edges_count) {
-        return r_a_p;
-    }
     graph_types::edge e1 = boost::random_edge(m_graph,
         m_random_generator);
     graph_types::edge e2 = boost::random_edge(m_graph,
@@ -50,6 +42,7 @@ randomization_type fixed_degree_randomizer::get_type() const
 }
 
 fixed_degree_randomizer::fixed_degree_randomizer(
-    graph_types::undirected_graph& graph)
-    : randomizator_base(graph)
+    graph_types::undirected_graph& graph,
+    graph_types::sequent_null_edges& non_existing_edges)
+    : randomizator_base(graph, non_existing_edges)
 {}

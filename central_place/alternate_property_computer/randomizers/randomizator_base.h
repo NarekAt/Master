@@ -29,10 +29,13 @@ public:
     /**
      * @brief Constructor
      * @param graph Graph to perform randomization.
+     * @param non_existing_edges Non existing edges of graph.
      */
-    randomizator_base(graph_types::undirected_graph& graph);
+    randomizator_base(graph_types::undirected_graph& graph,
+        graph_types::sequent_null_edges& non_existing_edges);
 
 protected:
     graph_types::random_generator m_random_generator;
     graph_types::undirected_graph& m_graph;
+    graph_types::sequent_null_edges& m_non_existing_edges;
 };

@@ -9,6 +9,7 @@
 #include <system_error>
 #include <assert.h>
 #include <iostream>
+#include <time.h>
 
 void task_manager_base::init(const graph_types::undirected_graph& g,
     const mu_list& m, unsigned s_c, const randomization_type r,
@@ -21,17 +22,7 @@ void task_manager_base::init(const graph_types::undirected_graph& g,
     m_step_count = s_c;
     m_randomizator_type = r;
     m_alternate_property_type = p;
-    assert(nullptr == m_counter);
-    // Computing initial alternate property count of the graph.
-    m_counter = property_counter_factory::get_counter(
-        m_initial_graph, m_alternate_property_type);
-    m_initial_property_count = m_counter->compute_initial_count();
-    // TODO: change cout to log.
-    std::cout << "\nGraph initial " << 
-        get_alternate_property_name_by_type(m_alternate_property_type) <<
-        " computed: " << m_initial_property_count << std::endl;
-    delete m_counter;
-    m_counter = nullptr;
+    calculate_initial_alternate_property_count();
 }
 
 const calculation_results& task_manager_base::get_results() const
@@ -64,10 +55,11 @@ void task_manager_base::calculate_for_single_mu_by_pass_count(
 {
     for (int p_c = 0; p_c < m_pass_count; ++p_c) { 
         m_current_graph = m_initial_graph;
+        m_current_non_existing_edges = m_initial_non_existing_edges;
         assert(nullptr == m_randomizator);
         assert(nullptr == m_counter);
         m_randomizator = randomizator_factory::get_randomizator(
-            m_current_graph, m_randomizator_type);
+            m_current_graph, m_current_non_existing_edges, m_randomizator_type);
         m_counter = property_counter_factory::get_counter(
             m_current_graph, m_alternate_property_type);
         m_current_property_count = m_initial_property_count; 
@@ -108,9 +100,15 @@ void task_manager_base::calculate_for_single_mu(
             for (auto& e : step.second) {
                 boost::add_edge(e.first, e.second, m_current_graph);
             }
+            for (auto& e : step.first) {
+                m_current_non_existing_edges.push_back(e);
+            }
         } else {
             for (auto& e : step.first) {
                 boost::add_edge(e.first, e.second, m_current_graph);
+            }
+            for (auto& e : step.second) {
+                m_current_non_existing_edges.push_back(e);
             }
         }
         if (is_first_pass) {
@@ -123,8 +121,43 @@ void task_manager_base::calculate_for_single_mu(
     }
 }
 
+void task_manager_base::calculate_initial_non_existing_edges()
+{
+    graph_types::vertex_iterator v, v_end;
+    boost::tie(v, v_end) = boost::vertices(m_initial_graph);
+    for(; v != v_end; ++v)
+    {
+        graph_types::vertex_iterator v1 = v;
+        for(++v1; v1 != v_end; ++v1)
+        {
+            if(false == boost::edge(*v, *v1, m_initial_graph).second)
+            {
+                m_initial_non_existing_edges.push_back(std::make_pair(*v, *v1));
+            }
+        }
+    }
+    assert(!m_initial_non_existing_edges.empty());
+}
+
+void task_manager_base::calculate_initial_alternate_property_count()
+{
+    assert(nullptr == m_counter);
+    clock_t t = clock();
+    m_counter = property_counter_factory::get_counter(
+        m_initial_graph, m_alternate_property_type);
+    m_initial_property_count = m_counter->compute_initial_count();
+    t = clock() - t;
+    // TODO: change cout to log.
+    std::cout << "\nGraph initial " << 
+        get_alternate_property_name_by_type(m_alternate_property_type) <<
+        " computed: " << m_initial_property_count << 
+        " time: " << static_cast<float>(t)/CLOCKS_PER_SEC << std::endl;
+    delete m_counter;
+    m_counter = nullptr;
+}
+
 task_manager_base::task_manager_base(boost::mpi::communicator& world)
-    : m_inited(false), m_world(world), m_pass_count(10),
+    : m_inited(false), m_world(world), m_pass_count(1),
     m_randomizator(nullptr), m_counter(nullptr)
 {}
 

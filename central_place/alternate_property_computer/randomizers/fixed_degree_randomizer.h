@@ -30,6 +30,8 @@ public:
     /**
      * @brief Constructor
      * @param graph Graph to perform randomization.
+     * @param non_existing_edges Non existing edges of graph.
      */
-    fixed_degree_randomizer(graph_types::undirected_graph& graph);
+    fixed_degree_randomizer(graph_types::undirected_graph& graph,
+        graph_types::sequent_null_edges& non_existing_edges);
 };

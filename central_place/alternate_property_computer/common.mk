@@ -1,6 +1,6 @@
 GCC=mpic++
 
-CXXFLAGS=-std=c++11
+CXXFLAGS=-std=c++11 -O3
 IFLAGS=
 LFLAGS=-lstdc++ -Wl,-Bstatic -lboost_serialization -lboost_graph -lboost_regex -lboost_system -lboost_filesystem -lboost_mpi -lboost_program_options -Wl,-Bdynamic -lm
 

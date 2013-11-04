@@ -20,9 +20,10 @@ public:
      * @brief Creates and gets randomizator
      *        by given randomization_type.
      * @param graph Graph for randomizator.
+     * @param non_existing_edges Non existing edges of graph.
      * @param t Randomization type.
      * @note Got pointer must be deleted after use.
      */
-    static randomizator_base* get_randomizator(
-        graph_types::undirected_graph& graph, randomization_type t);
+    static randomizator_base* get_randomizator(graph_types::undirected_graph& graph, 
+        graph_types::sequent_null_edges& non_existing_edges, randomization_type t);
 };
