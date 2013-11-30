@@ -10,4 +10,4 @@ install:
 	done
 
 clean:
-	rm -rf $(BIN)
+	rm -rf $(BIN)/*.exe
