@@ -157,7 +157,7 @@ void task_manager_base::calculate_initial_alternate_property_count()
 }
 
 task_manager_base::task_manager_base(boost::mpi::communicator& world)
-    : m_inited(false), m_world(world), m_pass_count(1),
+    : m_inited(false), m_world(world), m_pass_count(10),
     m_randomizator(nullptr), m_counter(nullptr)
 {}
 
