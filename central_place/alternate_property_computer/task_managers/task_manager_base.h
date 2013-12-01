@@ -80,8 +80,9 @@ protected:
         RANDOMIZATION_TYPE = 6,
         ALTERNATE_PROPERTY_TYPE = 7,
         MUS = 8,
-        STATUS_INFORMATION = 9,
-        MU_START = 100
+        STATUS_TAGS = 9,
+        MU_START = 100,
+        STATUS_START = 1000
     };
 
 protected:

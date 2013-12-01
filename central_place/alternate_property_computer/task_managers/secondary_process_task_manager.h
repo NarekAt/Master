@@ -36,6 +36,7 @@ private:
 
 private:
     tag_to_mu_map m_taged_mus;
+    status_tags m_status_tags;
     std::vector<boost::mpi::request> m_status_requests;
     std::vector<persent_to_mu> m_status_cached_infos;
 

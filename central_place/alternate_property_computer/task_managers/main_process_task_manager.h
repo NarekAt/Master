@@ -39,9 +39,10 @@ private:
      * @param p_id Id of process to send ingredients.
      * @param mus Mu list for which secondary process must made
      *        calculations.
+     * @param s_t Status tags per process.
      */
     void send_ingredients(unsigned p_id, 
-        const tag_to_mu_map& mus) const;
+        const tag_to_mu_map& mus, const status_tags& s_t) const;
 
 private:
     /**

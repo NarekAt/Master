@@ -36,9 +36,15 @@ void main_process_task_manager::treat_status_information(const persent_to_mu& in
 void main_process_task_manager::send_ingredients_to_precesses() const
 {
     unsigned next_tag = MU_START;
+    unsigned next_status_tag = STATUS_START;
     unsigned mu_i = 0;
     for (auto& p_to_c : m_process_to_mu_count) {
         tag_to_mu_map c_t_m;
+        status_tags s_t;
+        int s_per_process = p_to_c.second*m_pass_count*(m_step_count / s_status_step);
+        for (int i = 0; i < s_per_process; ++i) {
+            s_t.push_back(next_status_tag++);
+        }
         if (0 != p_to_c.second) {
             int e = mu_i + p_to_c.second;
             assert(m_mu_list.size() >= e);
@@ -49,13 +55,13 @@ void main_process_task_manager::send_ingredients_to_precesses() const
                 ++mu_i;
             }
         }
-        send_ingredients(p_to_c.first, c_t_m);
+        send_ingredients(p_to_c.first, c_t_m, s_t);
     }
     assert(m_mu_list.size() == mu_i);
 }
 
 void main_process_task_manager::send_ingredients(
-    unsigned p_id, const tag_to_mu_map& mus) const
+    unsigned p_id, const tag_to_mu_map& mus, const status_tags& s_t) const
 {
     assert(0 < p_id);
     if (mus.empty()) {
@@ -72,6 +78,7 @@ void main_process_task_manager::send_ingredients(
     m_world.send(p_id, ALTERNATE_PROPERTY_TYPE,
         static_cast<int>(m_alternate_property_type));
     m_world.send(p_id, MUS, mus);
+    m_world.send(p_id, STATUS_TAGS, s_t);
 }
 
 void main_process_task_manager::colculate_process_to_mu_count()
@@ -144,15 +151,16 @@ void main_process_task_manager::receive_results_from_processes()
     std::vector<std::pair<boost::mpi::request, double>> r_requests;
     std::vector<std::pair<boost::mpi::request, persent_to_mu>> s_requests;
     unsigned next_tag = MU_START;
+    unsigned next_status_tag = STATUS_START;
     unsigned mu_i = 0;
     for (auto& p_to_c : m_process_to_mu_count) {
         if (0 != p_to_c.second) {
-            int s_per_process = m_pass_count*(m_step_count / s_status_step);
+            int s_per_process = p_to_c.second*m_pass_count*(m_step_count / s_status_step);
             for (int s_i = 0; s_i < s_per_process; ++s_i) {
                 s_requests.push_back(std::make_pair(
                     boost::mpi::request(), persent_to_mu()));
                 s_requests.back().first = m_world.irecv(
-                    p_to_c.first, STATUS_INFORMATION, s_requests.back().second);
+                    p_to_c.first, next_status_tag++, s_requests.back().second);
             }
             int e = mu_i + p_to_c.second;
             assert(m_mu_list.size() >= e);

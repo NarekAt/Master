@@ -22,10 +22,12 @@ void secondary_process_task_manager::run()
 
 void secondary_process_task_manager::treat_status_information(const persent_to_mu& info)
 {
+    assert(!m_status_tags.empty());
     m_status_requests.push_back(boost::mpi::request());
     m_status_cached_infos.push_back(info);
     m_status_requests.back() = 
-        m_world.isend(0, STATUS_INFORMATION, m_status_cached_infos.back());
+       m_world.isend(0, m_status_tags.front(), m_status_cached_infos.back());
+    m_status_tags.erase(m_status_tags.begin());
 }
 
 bool secondary_process_task_manager::receive_ingredients()
@@ -48,6 +50,7 @@ bool secondary_process_task_manager::receive_ingredients()
     m_alternate_property_type = static_cast<alternate_property_type>(
         ap_type);
     m_world.recv(0, MUS, m_taged_mus);
+    m_world.recv(0, STATUS_TAGS, m_status_tags);
     return true;
 }
 
