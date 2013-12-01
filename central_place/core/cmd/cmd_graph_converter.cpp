@@ -10,11 +10,12 @@ void cmd_graph_converter::execute()
         std::string message("cannot fork program");
         throw cmd::exception(message);
     } else if (0 == pid) {
-        std::string executable = std::string("graph_converter.exe")
-            + std::string(" ") + m_flag->get_value()
-            + std::string(" ") + m_file_from->get_value()
-            + std::string(" ") + m_file_to->get_value();
-        execvp(executable.c_str(), NULL);  
+        std::string executable = std::string("graph_converter.exe");
+        char* exec_args[] = { const_cast<char*>(executable.c_str()),
+            const_cast<char*>(m_flag->get_value().c_str()),
+            const_cast<char*>(m_file_from->get_value().c_str()),
+            const_cast<char*>(m_file_to->get_value().c_str()), NULL };
+        execvp(executable.c_str(), exec_args);  
     }
 }
 

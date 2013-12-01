@@ -36,6 +36,13 @@ public:
      */
     virtual void run() = 0;
 
+private:
+    /**
+     * @brief Treats status information.
+     * @param info Information to treat.
+     */
+    virtual void treat_status_information(const persent_to_mu& info) = 0;
+
 public:
     /**
      * @brief Gets results.
@@ -49,9 +56,13 @@ protected:
     void calculate_for_single_mu_by_pass_count(
         single_results_list& c_r, double mu);
 
+private:
+    void create_status_info_and_send_to_treat(const int step,
+        const int pass_step, const double mu);
+
 protected:
     void calculate_for_single_mu(single_results_list& c_r,
-        double mu, bool is_first_pass);
+        double mu, int pass_step);
 
 protected:
     void calculate_initial_non_existing_edges();
@@ -69,6 +80,7 @@ protected:
         RANDOMIZATION_TYPE = 6,
         ALTERNATE_PROPERTY_TYPE = 7,
         MUS = 8,
+        STATUS_INFORMATION = 9,
         MU_START = 100
     };
 

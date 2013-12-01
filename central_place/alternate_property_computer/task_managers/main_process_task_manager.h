@@ -22,6 +22,13 @@ public:
 
 private:
     /**
+     * @brief Treats status information.
+     * @param info Information to treat.
+     */
+    virtual void treat_status_information(const persent_to_mu& info);
+
+private:
+    /**
      * @brief Sends needed ingredients to secondary processes.
      */
     void send_ingredients_to_precesses() const;
@@ -46,7 +53,14 @@ private:
     /**
      * @brief Recieves results from secondary processes.
      */
-    void revieve_results_from_processes();
+    void receive_results_from_processes();
+
+private:
+    /**
+     * @brief Waits for Requests of statuses from secondary processes.
+     */
+    void process_requests_of_statuses(
+        std::vector<std::pair<boost::mpi::request, persent_to_mu>>& s_requests);
 
 private:
     process_to_mu_count m_process_to_mu_count;

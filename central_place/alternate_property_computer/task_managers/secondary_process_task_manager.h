@@ -22,6 +22,13 @@ public:
 
 private:
     /**
+     * @brief Treats status information.
+     * @param info Information to treat.
+     */
+    virtual void treat_status_information(const persent_to_mu& info);
+
+private:
+    /**
      * @brief receives needed ingredients from main process.
      * @return false if main process don't need this process.
      */
@@ -29,6 +36,8 @@ private:
 
 private:
     tag_to_mu_map m_taged_mus;
+    std::vector<boost::mpi::request> m_status_requests;
+    std::vector<persent_to_mu> m_status_cached_infos;
 
 private:
     /**

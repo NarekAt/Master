@@ -74,6 +74,13 @@ alternate_property_type get_alternate_property_type_by_name(
 std::string get_alternate_property_name_by_type(
     alternate_property_type t);
 
+static int s_status_step = 500;
+
+/**
+ * @brief Persent of work which was done to mu
+ */
+typedef std::pair<double, double> persent_to_mu;
+
 /**
  * @brief mu values list.
  */

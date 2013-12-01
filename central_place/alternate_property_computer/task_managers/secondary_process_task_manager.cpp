@@ -20,6 +20,14 @@ void secondary_process_task_manager::run()
     calculate_and_send();
 }
 
+void secondary_process_task_manager::treat_status_information(const persent_to_mu& info)
+{
+    m_status_requests.push_back(boost::mpi::request());
+    m_status_cached_infos.push_back(info);
+    m_status_requests.back() = 
+        m_world.isend(0, STATUS_INFORMATION, m_status_cached_infos.back());
+}
+
 bool secondary_process_task_manager::receive_ingredients()
 {
     bool process_is_needed = false;
@@ -55,6 +63,7 @@ void secondary_process_task_manager::calculate_and_send()
         requests.push_back(boost::mpi::request());
         requests.back() = m_world.isend(0, t_m.first, c_r); 
     }
+    boost::mpi::wait_all(m_status_requests.begin(), m_status_requests.end());
     boost::mpi::wait_all(requests.begin(), requests.end());
 }
 

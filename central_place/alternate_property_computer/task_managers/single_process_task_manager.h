@@ -19,6 +19,13 @@ public:
      */
     virtual void run();
 
+private:
+    /**
+     * @brief Treats status information.
+     * @param info Information to treat.
+     */
+    virtual void treat_status_information(const persent_to_mu& info);
+
 public:
     /**
      * @brief Constructor

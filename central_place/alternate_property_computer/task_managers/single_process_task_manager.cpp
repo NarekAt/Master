@@ -4,6 +4,7 @@
  */
 
 #include "single_process_task_manager.h"
+#include "property_counter_base.h"
 #include "randomizator_factory.h"
 #include <iostream>
 
@@ -19,6 +20,16 @@ void single_process_task_manager::run()
             " finished.\n";
         m_results.push_back(std::make_pair(mu, c_r));
     }
+}
+
+void single_process_task_manager::treat_status_information(const persent_to_mu& info)
+{
+    std::string p_t_n = get_alternate_property_name_by_type(
+        m_counter->get_type());
+    std::string info_message = std::string("calculation by ") + p_t_n + 
+        std::string(" was done by ") + std::to_string(info.first) + 
+        std::string("% for mu ") + std::to_string(info.second);
+    std::cout << info_message << std::endl;
 }
 
 single_process_task_manager::single_process_task_manager(

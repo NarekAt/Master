@@ -53,7 +53,7 @@ bool task_manager_base::check_to_assume_step(int delta
 void task_manager_base::calculate_for_single_mu_by_pass_count(
     single_results_list& c_r, double mu)
 {
-    for (int p_c = 0; p_c < m_pass_count; ++p_c) { 
+    for (int p_s = 0; p_s < m_pass_count; ++p_s) { 
         m_current_graph = m_initial_graph;
         m_current_non_existing_edges = m_initial_non_existing_edges;
         assert(nullptr == m_randomizator);
@@ -63,11 +63,11 @@ void task_manager_base::calculate_for_single_mu_by_pass_count(
         m_counter = property_counter_factory::get_counter(
             m_current_graph, m_alternate_property_type);
         m_current_property_count = m_initial_property_count; 
-        if (0 == p_c) {
+        if (0 == p_s) {
             c_r.push_back(std::make_pair(0, 
                 static_cast<double>(m_current_property_count)));
         }
-        calculate_for_single_mu(c_r, mu, 0 == p_c);
+        calculate_for_single_mu(c_r, mu, p_s);
         delete m_randomizator;
         m_randomizator = nullptr;
         delete m_counter;
@@ -78,12 +78,23 @@ void task_manager_base::calculate_for_single_mu_by_pass_count(
     }
 }
 
+void task_manager_base::create_status_info_and_send_to_treat(const int step,
+    const int pass_step, const double mu)
+{
+    double p = (static_cast<double>(m_step_count*pass_step + step) /
+        static_cast<double>(m_step_count*m_pass_count)) * 100;
+    treat_status_information(persent_to_mu(p, mu));
+}
+
 void task_manager_base::calculate_for_single_mu(
-    single_results_list& c_r, double mu, bool is_first_pass)
+    single_results_list& c_r, double mu, int pass_step)
 {
     assert(nullptr != m_counter);
     assert(nullptr != m_randomizator);
     for (int s_i = 1; s_i <= m_step_count; ++s_i) {
+        if (0 == s_i % s_status_step) {
+            create_status_info_and_send_to_treat(s_i, pass_step, mu);
+        }
         auto step = m_randomizator->get_step();
         unsigned d = m_counter->compute_decrease_after_remove(
             step.first);
@@ -111,7 +122,7 @@ void task_manager_base::calculate_for_single_mu(
                 m_current_non_existing_edges.push_back(e);
             }
         }
-        if (is_first_pass) {
+        if (0 == pass_step) {
             c_r.push_back(std::make_pair(s_i, 
                 static_cast<double>(m_current_property_count)));
         } else {
