@@ -24,6 +24,12 @@ void single_process_task_manager::run()
 
 void single_process_task_manager::treat_status_information(const persent_to_mu& info)
 {
+    // Means That whole calculation was done for came mu.
+    if (0 == info.first) {
+        std::cout << "*** Calculation was done for mu: " << info.second
+            << " ***\n";
+        return;
+    }
     std::string p_t_n = get_alternate_property_name_by_type(
         m_counter->get_type());
     std::string info_message = std::string("calculation by ") + p_t_n + 

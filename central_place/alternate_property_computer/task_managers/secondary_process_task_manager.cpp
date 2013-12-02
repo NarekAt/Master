@@ -25,7 +25,7 @@ void secondary_process_task_manager::treat_status_information(const persent_to_m
     assert(!m_status_tags.empty());
     m_status_requests.push_back(boost::mpi::request());
     m_status_cached_infos.push_back(info);
-    m_status_requests.back() = 
+    m_status_requests.back() =
        m_world.isend(0, m_status_tags.front(), m_status_cached_infos.back());
     m_status_tags.erase(m_status_tags.begin());
 }
@@ -64,7 +64,7 @@ void secondary_process_task_manager::calculate_and_send()
         auto& c_r = m_results.back();
         calculate_for_single_mu_by_pass_count(c_r.second, t_m.second);
         requests.push_back(boost::mpi::request());
-        requests.back() = m_world.isend(0, t_m.first, c_r); 
+        requests.back() = m_world.isend(0, t_m.first, c_r);
     }
     boost::mpi::wait_all(m_status_requests.begin(), m_status_requests.end());
     boost::mpi::wait_all(requests.begin(), requests.end());

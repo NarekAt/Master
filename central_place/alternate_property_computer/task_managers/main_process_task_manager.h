@@ -31,7 +31,7 @@ private:
     /**
      * @brief Sends needed ingredients to secondary processes.
      */
-    void send_ingredients_to_precesses() const;
+    void send_ingredients_to_precesses();
 
 private:
     /**
@@ -60,12 +60,11 @@ private:
     /**
      * @brief Waits for Requests of statuses from secondary processes.
      */
-    void process_requests_of_statuses(
-        std::vector<std::pair<boost::mpi::request, persent_to_mu>>& s_requests);
+    void process_requests_of_statuses();
 
 private:
     process_to_mu_count m_process_to_mu_count;
-
+    process_to_status_tags m_process_to_status_tags;
 public:
     /**
      * @brief Constructor

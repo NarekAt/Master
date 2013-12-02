@@ -76,11 +76,17 @@ void task_manager_base::calculate_for_single_mu_by_pass_count(
     for (auto r : c_r) {
         r.second /= m_pass_count;
     }
+    // This indicates that colculation for current mu is done.
+    create_status_info_and_send_to_treat(0, 0, mu);
 }
 
 void task_manager_base::create_status_info_and_send_to_treat(const int step,
     const int pass_step, const double mu)
 {
+    if (0 == step && 0 == pass_step) {
+        treat_status_information(persent_to_mu(0, mu));
+        return;
+    }
     double p = (static_cast<double>(m_step_count*pass_step + step) /
         static_cast<double>(m_step_count*m_pass_count)) * 100;
     treat_status_information(persent_to_mu(p, mu));

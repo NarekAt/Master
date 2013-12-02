@@ -102,6 +102,10 @@ typedef std::vector<std::pair<unsigned, double>> tag_to_mu_map;
 typedef std::vector<unsigned> status_tags;
 
 /**
+ * @brief Process to status tags.
+ */
+typedef std::map<unsigned, status_tags> process_to_status_tags;
+/**
  * @brief vector of pairs: step number to setp property count.
  */
 typedef std::vector<std::pair<unsigned, double>> single_results_list;
