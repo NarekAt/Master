@@ -7,10 +7,12 @@
 #include "randomizator_base.h"
 #include "property_counter_base.h"
 #include "property_counter_factory.h"
+#include "mediator.h"
 #include <boost/graph/adj_list_serialize.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/utility.hpp>
 #include <iostream>
+#include <algorithm>
 
 void main_process_task_manager::run()
 {
@@ -24,8 +26,7 @@ void main_process_task_manager::treat_status_information(const persent_to_mu& in
 {
     // Means That whole calculation was done for came mu.
     if (0 == info.first) {
-        std::cout << "*** Calculation was done for mu: " << info.second
-            << " ***\n";
+        std::cout << "\n*** Calculation was done for mu: " << info.second << " ***\n";
         return;
     }
     m_counter = property_counter_factory::get_counter(
@@ -120,24 +121,7 @@ void main_process_task_manager::colculate_process_to_mu_count()
     }
 }
 
-namespace {
-
-void process_requests_of_results(
-    std::vector<std::pair<boost::mpi::request, double>>& r_requests)
-{
-    while (!r_requests.empty()) {
-        for (int i = r_requests.size() - 1; i >= 0; --i) {
-            if (false == !r_requests[i].first.test()) {
-                r_requests.erase(r_requests.begin() + i);
-            }
-        }
-        usleep(100);
-    }
-}
-
-}
-
-void main_process_task_manager::process_requests_of_statuses()
+void main_process_task_manager::receive_results_from_processes()
 {
     unsigned statuses_count = m_mu_list.size() *
         m_pass_count * (m_step_count / s_status_step) + m_mu_list.size();
@@ -161,33 +145,15 @@ void main_process_task_manager::process_requests_of_statuses()
         persent_to_mu upcoming_info;
         m_world.recv(t.first, t.second, upcoming_info);
         treat_status_information(upcoming_info);
-    }
-}
-
-void main_process_task_manager::receive_results_from_processes()
-{
-    m_results.reserve(m_mu_list.size());
-    std::vector<std::pair<boost::mpi::request, double>> r_requests;
-    unsigned next_tag = MU_START;
-    unsigned mu_i = 0;
-    for (auto& p_to_c : m_process_to_mu_count) {
-        if (0 != p_to_c.second) {
-            int e = mu_i + p_to_c.second;
-            assert(m_mu_list.size() >= e);
-            while (mu_i < e) {
-                m_results.push_back(std::make_pair(
-                    m_mu_list[mu_i], single_results_list()));
-                r_requests.push_back(std::make_pair(
-                    boost::mpi::request(), m_mu_list[mu_i]));
-                r_requests.back().first = m_world.irecv(
-                    p_to_c.first, next_tag, m_results.back()); 
-                ++next_tag;
-                ++mu_i;
-            }
+        // This if checks if calculation ended.
+        if (0 == upcoming_info.first) {
+            std::pair<double, single_results_list> s_r;
+            unsigned mu_tag = std::distance(m_mu_list.begin(), std::find(
+                m_mu_list.begin(), m_mu_list.end(), upcoming_info.second)) + MU_START;
+            m_world.recv(t.first, mu_tag, s_r);
+            mediator::get_instance().write_results(s_r.second, s_r.first);
         }
     }
-    process_requests_of_statuses();
-    process_requests_of_results(r_requests);
 }
 
 main_process_task_manager::main_process_task_manager(

@@ -10,17 +10,19 @@
 #include <ctime>
 #include <chrono>
 
-void results_writer::write(const calculation_results& r,
-    unsigned n, double p)
+results_writer* results_writer::s_instance = nullptr;
+
+void results_writer::prapare_writer(unsigned n, double p)
 {
-    if (!prepare_output_directory(n, p)) {
+    m_vertex_count = n;
+    m_probability = p;
+    assert(!m_is_writer_ready);
+    if (!prepare_output_directory()) {
         // TODO: throw exception.
         return; // dont forget to remove, 
                 // after throw part will be implemented.
     }
-    for (auto& s_r : r) {
-        write_single_results_list(s_r.second, n, p, s_r.first);
-    }
+    m_is_writer_ready = true;
 }
 
 namespace {
@@ -49,8 +51,9 @@ std::string get_time_name_of_folder()
 
 }
 
-bool results_writer::prepare_output_directory(unsigned n, double p)
+bool results_writer::prepare_output_directory()
 {
+    assert(!m_is_writer_ready);
     m_directory_name = "global_results";
     if (!if_dir_dont_exists_then_create(m_directory_name)) {
         return false;
@@ -61,8 +64,8 @@ bool results_writer::prepare_output_directory(unsigned n, double p)
         return false;
     }
     m_directory_name += std::string("/") +
-        get_time_name_of_folder() + "_N" + std::to_string(n) +
-        "_p" + std::to_string(p);
+        get_time_name_of_folder() + "_N" + std::to_string(m_vertex_count) +
+        "_p" + std::to_string(m_probability);
     if (!if_dir_dont_exists_then_create(m_directory_name)) {
         return false;
     }
@@ -70,9 +73,9 @@ bool results_writer::prepare_output_directory(unsigned n, double p)
 }
 
 void results_writer::write_single_results_list(
-    const single_results_list& r,
-    unsigned n, double p, double mu) const
+    const single_results_list& r, double mu) const
 {
+    assert(m_is_writer_ready);
     std::string file_name = m_directory_name + "/" + 
         "mu" + std::to_string(mu) + ".txt";
     auto f = boost::filesystem::status(file_name);
@@ -90,7 +93,7 @@ void results_writer::write_single_results_list(
         // TODO: write error message.
         return;
     }
-    output << n << " " << p << " " << mu << std::endl;
+    output << m_vertex_count << " " << m_probability << " " << mu << std::endl;
     for (auto n_r : r) {
         output << n_r.first << " " << n_r.second << std::endl;
     }
@@ -99,3 +102,26 @@ void results_writer::write_single_results_list(
     std::cout << "\nWriting Results for mu: " << mu <<
         " finished.\n";
 }
+
+results_writer& results_writer::get_instance()
+{
+    assert(s_instance != nullptr);
+    return *s_instance;
+}
+
+void results_writer::instantiate()
+{
+    assert(s_instance == nullptr);
+    s_instance = new results_writer();
+}
+
+void results_writer::destroy()
+{
+    assert(s_instance != nullptr);
+    delete s_instance;
+    s_instance = nullptr;
+}
+
+results_writer::results_writer()
+    : m_is_writer_ready(false)
+{}

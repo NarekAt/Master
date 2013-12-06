@@ -57,12 +57,6 @@ private:
     void receive_results_from_processes();
 
 private:
-    /**
-     * @brief Waits for Requests of statuses from secondary processes.
-     */
-    void process_requests_of_statuses();
-
-private:
     process_to_mu_count m_process_to_mu_count;
     process_to_status_tags m_process_to_status_tags;
 public:

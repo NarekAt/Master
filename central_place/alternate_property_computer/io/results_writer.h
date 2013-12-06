@@ -20,23 +20,21 @@ class results_writer
 {
 public:
     /**
-     * @brief Writes results
-     * @param r Calculation results.
+     * @brief Prepares writer.
      * @param n Vertex count of graph
      * @param p Probability of Erdos-Renyi graph
+     * @note Must be called only one time.
      */
-    void write(const calculation_results& r, unsigned n, double p);
+    void prapare_writer(unsigned n, double p);
 
 private:
     /**
      * @brief Prepares output directory.
-     * @param n Vertex count of graph
-     * @param p Probability of Erdos-Renyi graph
      * @return Returns false if praparing faild.
      */
-    bool prepare_output_directory(unsigned n, double p);
+    bool prepare_output_directory();
 
-private:
+public:
     /**
      * @brief Writes single result list.
      * @param r Single result list.
@@ -44,9 +42,53 @@ private:
      * @param p Probability of Erdos-Renyi graph
      * @param mu Mu of calculation.
      */
-    void write_single_results_list(const single_results_list& r,
-        unsigned n, double p, double mu) const;
+    void write_single_results_list(const single_results_list& r, double mu) const;
+
+    /// @name singleton management
+    /// @{
+public:
+    /**
+     * @brief Gets singletone object.
+     */
+    static results_writer& get_instance();
+
+public:
+    /**
+     * @brief Intstantiates singletone object.
+     */
+    static void instantiate();
+
+public:
+    /**
+     * @brief Destroys singletone object.
+     */
+    static void destroy();
+
+private:
+    static results_writer* s_instance;
+    /// @}
+
+    /// @name Special member functions.
+    /// @{
+public:
+    /**
+     * @brief Constructor
+     */
+    results_writer();
+
+public:
+    /**
+     * @brief Destructor.
+     */
+    ~results_writer() = default;
+private:
+    results_writer(const results_writer&) = delete;
+    results_writer& operator=(const results_writer&) = delete;
+    /// @}
 
 private:
     std::string m_directory_name;
+    bool m_is_writer_ready;
+    unsigned m_vertex_count;
+    double m_probability;
 };

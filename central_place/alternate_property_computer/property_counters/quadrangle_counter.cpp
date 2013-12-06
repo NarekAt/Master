@@ -42,7 +42,6 @@ unsigned quadrangle_counter::compute_initial_count() const
 unsigned quadrangle_counter::compute_decrease_after_remove(
     const graph_types::null_edges& e) const
 {
-
     unsigned d_c = 0;
     for (const auto& n_e : e) {
         graph_types::vertex vs = n_e.first;

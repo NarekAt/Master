@@ -36,6 +36,14 @@ public:
      */
     void run(boost::mpi::communicator& world);
 
+public:
+    /**
+     * @brief Writes came single results list.
+     * @param s_r Single results list.
+     * @param mu Mu of results
+     */
+    void write_results(const single_results_list& s_r, double mu) const;
+
 private:
     /**
      * @brief Uses task manager for initing it, run, get result

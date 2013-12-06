@@ -6,6 +6,7 @@
 #include "single_process_task_manager.h"
 #include "property_counter_base.h"
 #include "randomizator_factory.h"
+#include "mediator.h"
 #include <iostream>
 
 void single_process_task_manager::run()
@@ -15,10 +16,7 @@ void single_process_task_manager::run()
     for (auto& mu : m_mu_list) {
         single_results_list c_r;
         calculate_for_single_mu_by_pass_count(c_r, mu);
-        // TODO: change cout to log.
-        std::cout << "\nCalculation for mu: " << mu <<
-            " finished.\n";
-        m_results.push_back(std::make_pair(mu, c_r));
+        mediator::get_instance().write_results(c_r, mu);
     }
 }
 
@@ -26,7 +24,7 @@ void single_process_task_manager::treat_status_information(const persent_to_mu& 
 {
     // Means That whole calculation was done for came mu.
     if (0 == info.first) {
-        std::cout << "*** Calculation was done for mu: " << info.second
+        std::cout << "\n*** Calculation was done for mu: " << info.second
             << " ***\n";
         return;
     }

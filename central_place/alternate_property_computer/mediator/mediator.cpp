@@ -48,6 +48,7 @@ void mediator::init(const arg_name_to_value_map& a_n_v)
         m_alternate_property_type = boost::any_cast<
             alternate_property_type>(apt_it->second);
         assert(INVALID_APT != m_alternate_property_type);
+        results_writer::get_instance().prapare_writer(m_vertex_count, m_probability);
     } catch (const boost::bad_any_cast&) {
         assert(!"bad any cast");
     }
@@ -70,27 +71,22 @@ void mediator::run(boost::mpi::communicator& world)
     }
 }
 
+void mediator::write_results(const single_results_list& s_r, double mu) const
+{
+    results_writer::get_instance().write_single_results_list(s_r, mu);
+}
+
 void mediator::run_task_manager_and_send_to_output(
     task_manager_base& t_m)
 {
     // TODO: change cout to log.
     time_t c_t = time(0);
-    std::cout << "\n>>>>> Calculation Started: " <<
-        ctime(&c_t);
+    std::cout << "\n>>>>> Calculation Started: " << ctime(&c_t);
     t_m.init(m_graph, m_mu_list, m_step_count,
         m_randomization_type, m_alternate_property_type);
     t_m.run();
     c_t = time(0);
-    std::cout << "\n>>>>> Calculation Finished: " <<
-        ctime(&c_t);
-    c_t = time(0);
-    std::cout << "\n>>>>> Writing Results Started: " <<
-        ctime(&c_t);
-    results_writer w;
-    w.write(t_m.get_results(), m_vertex_count, m_probability);
-    c_t = time(0);
-    std::cout << "\n>>>>> Writing Results Finished: " <<
-        ctime(&c_t);
+    std::cout << "\n>>>>> Calculation Finished: " << ctime(&c_t);
 }
 
 mediator& mediator::get_instance()
