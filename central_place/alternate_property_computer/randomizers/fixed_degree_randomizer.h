@@ -18,7 +18,7 @@ public:
     /**
      * @brief Gets step of randomizator.
      */
-    virtual remove_add_edges_pair get_step();
+    virtual graph_types::remove_add_edges_pair get_step();
 
 public:
     /**
@@ -32,6 +32,6 @@ public:
      * @param graph Graph to perform randomization.
      * @param non_existing_edges Non existing edges of graph.
      */
-    fixed_degree_randomizer(graph_types::undirected_graph& graph,
+    fixed_degree_randomizer(graph_types::graph& graph,
         graph_types::sequent_null_edges& non_existing_edges);
 };

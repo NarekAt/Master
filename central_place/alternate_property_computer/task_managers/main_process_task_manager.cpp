@@ -8,8 +8,6 @@
 #include "property_counter_base.h"
 #include "property_counter_factory.h"
 #include "mediator.h"
-#include <boost/graph/adj_list_serialize.hpp>
-#include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/utility.hpp>
 #include <iostream>
 #include <algorithm>

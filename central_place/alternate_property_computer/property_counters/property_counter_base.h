@@ -6,7 +6,13 @@
 #pragma once
 
 #include "types.h"
+#include "graph_types.h"
 #include <set>
+
+namespace graph_types
+{
+    class graph;
+}
 
 /**
  * @class property_counter_base
@@ -27,7 +33,7 @@ public:
      * @param e Edges to remove.
      */
     virtual unsigned compute_decrease_after_remove(
-        const graph_types::null_edges& e) const = 0;
+        const graph_types::sequent_null_edges& e) const = 0;
 
 public:
     /**
@@ -35,7 +41,7 @@ public:
      * @param e Edges to add.
      */
     virtual unsigned compute_increase_after_add(
-        const graph_types::null_edges& e) const = 0;
+        const graph_types::sequent_null_edges& e) const = 0;
 
 public:
     /**
@@ -44,14 +50,15 @@ public:
     virtual alternate_property_type get_type() const = 0;
 
 protected:
-    graph_types::undirected_graph& m_graph;
+    graph_types::graph& m_graph;
 
 public:
     /**
      * @brief Constructor
      * @param graph Graph for counting property.
+     * TODO: move body into cpp
      */
-    property_counter_base(graph_types::undirected_graph& graph)
+    property_counter_base(graph_types::graph& graph)
         : m_graph(graph)
     {}
 };

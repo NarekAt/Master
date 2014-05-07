@@ -108,7 +108,7 @@ void mediator::destroy()
     s_instance = nullptr;
 }
 
-mediator::mediator()
-    : m_inited(false)
-{
-}
+mediator::mediator() :
+    m_inited(false),
+    m_graph(graph_types::storage_core_type::BITSETS_FULL)
+{}

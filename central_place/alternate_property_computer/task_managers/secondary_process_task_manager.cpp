@@ -6,8 +6,6 @@
 #include "secondary_process_task_manager.h"
 #include "randomizator_base.h"
 #include "property_counter_base.h"
-#include <boost/graph/adj_list_serialize.hpp>
-#include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/utility.hpp>
 #include <iostream>
 

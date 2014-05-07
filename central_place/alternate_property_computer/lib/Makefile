@@ -1,7 +1,7 @@
 TARGET=alternate_property_computer.exe
 include ../common.mk
 
-SUBDIRS=../exceptions ../common ../package ../main ../argument_parser ../mediator ../io ../property_counters ../randomizers ../task_managers
+SUBDIRS=../exceptions ../graph_types ../common ../package ../main ../argument_parser ../mediator ../io ../property_counters ../randomizers ../task_managers
 OBJS=$(wildcard $(join $(SUBDIRS), $(DIR)/*.o))
 
 $(TARGET) : $(OBJS)

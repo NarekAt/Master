@@ -1,4 +1,4 @@
-SUBDIRS=alternate_property_computer graph_converter core
+SUBDIRS=alternate_property_computer graph_converter graph graph_generator core
 BIN=bin
 
 .PHONY : install clean

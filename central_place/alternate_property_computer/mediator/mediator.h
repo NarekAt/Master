@@ -6,6 +6,7 @@
 #pragma once
 
 #include "types.h"
+#include "graph.h"
 #include <boost/mpi.hpp>
 
 class task_manager_base;
@@ -55,7 +56,7 @@ private:
 
 private:
     bool m_inited;
-    graph_types::undirected_graph m_graph;
+    graph_types::graph m_graph;
     mu_list m_mu_list;
     unsigned m_step_count;
     randomization_type m_randomization_type;

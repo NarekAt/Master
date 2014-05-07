@@ -25,7 +25,7 @@ public:
      * @param e Edges to remove.
      */
     virtual unsigned compute_decrease_after_remove(
-        const graph_types::null_edges& e) const;
+        const graph_types::sequent_null_edges& e) const;
 
 public:
     /**
@@ -33,7 +33,7 @@ public:
      * @param e Edges to add.
      */
     virtual unsigned compute_increase_after_add(
-        const graph_types::null_edges& e) const;
+        const graph_types::sequent_null_edges& e) const;
 
 public:
     /**
@@ -46,5 +46,5 @@ public:
      * @brief Constructor
      * @param graph Graph for computing quadrangle count.
      */
-    quadrangle_counter(graph_types::undirected_graph& graph);
+    quadrangle_counter(graph_types::graph& graph);
 };

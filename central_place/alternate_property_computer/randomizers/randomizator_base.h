@@ -6,6 +6,11 @@
 #pragma once
 
 #include "types.h"
+#include "graph_types.h"
+
+namespace graph_types {
+    class graph;
+}
 
 /**
  * @class randomizator_base
@@ -17,7 +22,7 @@ public:
     /**
      * @brief Gets step of randomizator.
      */
-    virtual remove_add_edges_pair get_step() = 0;
+    virtual graph_types::remove_add_edges_pair get_step() = 0;
 
 public:
     /**
@@ -31,11 +36,11 @@ public:
      * @param graph Graph to perform randomization.
      * @param non_existing_edges Non existing edges of graph.
      */
-    randomizator_base(graph_types::undirected_graph& graph,
+    randomizator_base(graph_types::graph& graph,
         graph_types::sequent_null_edges& non_existing_edges);
 
 protected:
     graph_types::random_generator m_random_generator;
-    graph_types::undirected_graph& m_graph;
+    graph_types::graph& m_graph;
     graph_types::sequent_null_edges& m_non_existing_edges;
 };

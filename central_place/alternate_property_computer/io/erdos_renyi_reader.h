@@ -1,9 +1,9 @@
+#pragma once
+
 /**
  * @file io/erdos_renyi_reader.h
  * @brief declaration of erdos_renyi_reader class
  */
-
-#pragma once
 
 /**
  * TODO: 
@@ -13,6 +13,11 @@
  */
 
 #include "types.h"
+
+namespace graph_types
+{
+    class graph;
+}
 
 /**
  * @class erdos_renyi_reader
@@ -39,5 +44,5 @@ public:
      * @param[out] p Probability to be red.
      */
     void get_graph_and_properties_from_file(const std::string& f_n,
-        graph_types::undirected_graph& graph, unsigned& v_c, double& p);
+        graph_types::graph& graph, unsigned& v_c, double& p);
 };

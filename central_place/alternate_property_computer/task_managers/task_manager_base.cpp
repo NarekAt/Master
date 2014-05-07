@@ -5,13 +5,16 @@
 
 #include "task_manager_base.h"
 #include "randomizator_factory.h"
+#include "randomizator_base.h"
 #include "property_counter_factory.h"
+#include "property_counter_base.h"
+#include "graph_constants.h"
 #include <system_error>
 #include <assert.h>
 #include <iostream>
 #include <time.h>
 
-void task_manager_base::init(const graph_types::undirected_graph& g,
+void task_manager_base::init(const graph_types::graph& g,
     const mu_list& m, unsigned s_c, const randomization_type r,
     const alternate_property_type p)
 {
@@ -23,6 +26,7 @@ void task_manager_base::init(const graph_types::undirected_graph& g,
     m_randomizator_type = r;
     m_alternate_property_type = p;
     calculate_initial_alternate_property_count();
+    calculate_initial_non_existing_edges();
 }
 
 const calculation_results& task_manager_base::get_results() const
@@ -55,6 +59,7 @@ void task_manager_base::calculate_for_single_mu_by_pass_count(
 {
     for (int p_s = 0; p_s < m_pass_count; ++p_s) { 
         m_current_graph = m_initial_graph;
+        m_current_non_existing_edges.clear();
         m_current_non_existing_edges = m_initial_non_existing_edges;
         assert(nullptr == m_randomizator);
         assert(nullptr == m_counter);
@@ -107,24 +112,25 @@ void task_manager_base::calculate_for_single_mu(
         // edges must be added befor calling function:
         // compute_increase_after_add(<added_edges>).
         for (auto& e : step.second) {
-            boost::add_edge(e.first, e.second, m_current_graph);
+            m_current_graph.add_edge(e);
         }
-        unsigned i =
-            m_counter->compute_increase_after_add(step.second);
+        unsigned i = m_counter->compute_increase_after_add(step.second);
         unsigned delta = i - d;
         if (check_to_assume_step(delta, mu)) {
             m_current_property_count += delta;
             for (auto& e : step.second) {
-                boost::add_edge(e.first, e.second, m_current_graph);
+                m_current_graph.add_edge(e);
             }
             for (auto& e : step.first) {
+                assert(!m_current_graph.edge_exists(e));
                 m_current_non_existing_edges.push_back(e);
             }
         } else {
             for (auto& e : step.first) {
-                boost::add_edge(e.first, e.second, m_current_graph);
+                m_current_graph.add_edge(e);
             }
             for (auto& e : step.second) {
+                assert(!m_current_graph.edge_exists(e));
                 m_current_non_existing_edges.push_back(e);
             }
         }
@@ -140,16 +146,15 @@ void task_manager_base::calculate_for_single_mu(
 
 void task_manager_base::calculate_initial_non_existing_edges()
 {
-    graph_types::vertex_iterator v, v_end;
-    boost::tie(v, v_end) = boost::vertices(m_initial_graph);
-    for(; v != v_end; ++v)
-    {
-        graph_types::vertex_iterator v1 = v;
-        for(++v1; v1 != v_end; ++v1)
-        {
-            if(false == boost::edge(*v, *v1, m_initial_graph).second)
-            {
-                m_initial_non_existing_edges.push_back(std::make_pair(*v, *v1));
+    assert(m_initial_non_existing_edges.empty());
+    const auto s = m_initial_graph.size();
+    for (graph_types::vertex i = graph_types::constants::VERTEX_0;
+        i < s; ++i) {
+        for (graph_types::vertex j = i + graph_types::vertex(1);
+            j < s; ++j) {
+            if (!m_initial_graph.edge_exists(i, j)) {
+                m_initial_non_existing_edges.push_back(
+                    graph_types::edge(i, j));
             }
         }
     }
@@ -173,9 +178,14 @@ void task_manager_base::calculate_initial_alternate_property_count()
     m_counter = nullptr;
 }
 
-task_manager_base::task_manager_base(boost::mpi::communicator& world)
-    : m_inited(false), m_world(world), m_pass_count(10),
-    m_randomizator(nullptr), m_counter(nullptr)
+task_manager_base::task_manager_base(boost::mpi::communicator& world) :
+    m_inited(false),
+    m_world(world),
+    m_pass_count(10),
+    m_randomizator(nullptr),
+    m_counter(nullptr),
+    m_initial_graph(graph_types::storage_core_type::BITSETS_FULL),
+    m_current_graph(graph_types::storage_core_type::BITSETS_FULL)
 {}
 
 task_manager_base::~task_manager_base()

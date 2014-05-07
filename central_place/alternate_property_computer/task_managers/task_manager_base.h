@@ -6,6 +6,8 @@
 #pragma once
 
 #include "types.h"
+#include "graph_types.h"
+#include "graph.h"
 #include <boost/mpi.hpp>
 
 class randomizator_base;
@@ -26,7 +28,7 @@ public:
      * @param r Randomization type
      * @param p Alternate property type.
      */
-    void init(const graph_types::undirected_graph& g,
+    void init(const graph_types::graph& g,
         const mu_list& m, unsigned s_c, const randomization_type r,
         const alternate_property_type p);
 
@@ -88,8 +90,8 @@ protected:
 protected:
     bool m_inited;
     boost::mpi::communicator& m_world;
-    graph_types::undirected_graph m_initial_graph;
-    graph_types::undirected_graph m_current_graph;
+    graph_types::graph m_initial_graph;
+    graph_types::graph m_current_graph;
     mu_list m_mu_list;
     unsigned m_step_count;
     // TODO: pass count must be got from program arguments.

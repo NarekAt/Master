@@ -5,9 +5,8 @@
 
 #pragma once
 
-#include "types.h"
-#include "triangle_counter.h"
-#include "quadrangle_counter.h"
+#include "graph_types.h"
+#include "property_counter_base.h"
 
 /**
  * @class property_counter_factory
@@ -24,6 +23,6 @@ public:
      * @note Got pointer must be deleted after use.
      */
     static property_counter_base* get_counter(
-        graph_types::undirected_graph& graph,
+        graph_types::graph& graph,
         alternate_property_type t);
 };

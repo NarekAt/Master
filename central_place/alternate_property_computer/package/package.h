@@ -12,6 +12,8 @@
  *   
  *        list of singletons:
  *            mediator
+ *            argument_parsert
+ *            results_wirter
  * @note No object can be created for this class,
  *       this class needed for its static functions.
  */

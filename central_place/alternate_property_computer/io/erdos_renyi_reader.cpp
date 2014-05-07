@@ -4,9 +4,9 @@
  */
 
 #include "erdos_renyi_reader.h"
+#include "graph.h"
 #include <fstream>
 #include <boost/archive/text_iarchive.hpp>
-#include <boost/graph/adj_list_serialize.hpp>
 
 
 void erdos_renyi_reader::get_mus_from_file(const std::string& f_n,
@@ -24,9 +24,10 @@ void erdos_renyi_reader::get_mus_from_file(const std::string& f_n,
     mu_file.close();
 }
 
+#include <iostream>
 void erdos_renyi_reader::get_graph_and_properties_from_file(
-    const std::string& f_n,
-    graph_types::undirected_graph& graph, unsigned& v_c, double& p)
+    const std::string& f_n, graph_types::graph& graph,
+    unsigned& v_c, double& p)
 {
     std::ifstream graph_file;
     graph_file.open(f_n);
@@ -34,7 +35,6 @@ void erdos_renyi_reader::get_graph_and_properties_from_file(
         // TODO: throw exception.
     }
     boost::archive::text_iarchive ia(graph_file);
-    ia >> v_c >> p;
-    boost::serialization::load(ia, graph, 0);
+    ia >> v_c >> p >> graph;
     graph_file.close();
 }

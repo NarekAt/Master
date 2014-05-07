@@ -6,8 +6,13 @@
 #pragma once
 
 #include "types.h"
-#include "random_switch_randomizer.h"
-#include "fixed_degree_randomizer.h"
+#include "graph_types.h"
+
+class randomizator_base;
+
+namespace graph_types {
+    class graph;
+}
 
 /**
  * @class randomizator_factory
@@ -24,6 +29,6 @@ public:
      * @param t Randomization type.
      * @note Got pointer must be deleted after use.
      */
-    static randomizator_base* get_randomizator(graph_types::undirected_graph& graph, 
+    static randomizator_base* get_randomizator(graph_types::graph& graph, 
         graph_types::sequent_null_edges& non_existing_edges, randomization_type t);
 };
