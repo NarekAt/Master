@@ -9,6 +9,7 @@
 #include "graph_types.h"
 #include "graph.h"
 #include <boost/mpi.hpp>
+#include <fstream>
 
 class randomizator_base;
 class property_counter_base;
@@ -106,13 +107,15 @@ protected:
     graph_types::sequent_null_edges m_initial_non_existing_edges;
     graph_types::sequent_null_edges m_current_non_existing_edges;
     calculation_results m_results;
+    std::ofstream& m_logger;
 
 public:
     /**
      * @brief Constructor
      * @param world World of mpi
      */
-    task_manager_base(boost::mpi::communicator& world);
+    task_manager_base(boost::mpi::communicator& world,
+        std::ofstream& logger);
 
 public:
     /**

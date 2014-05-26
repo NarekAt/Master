@@ -2,6 +2,9 @@
 #include "cmd_arg_string.h"
 #include "cmd_exception.h"
 #include <unistd.h>
+#include <iostream>
+#include <errno.h>
+#include <string.h>
 
 void cmd_graph_converter::execute()
 {
@@ -10,12 +13,15 @@ void cmd_graph_converter::execute()
         std::string message("cannot fork program");
         throw cmd::exception(message);
     } else if (0 == pid) {
-        std::string executable = std::string("graph_converter.exe");
+        std::string executable = std::string("./graph_converter.exe");
         char* exec_args[] = { const_cast<char*>(executable.c_str()),
             const_cast<char*>(m_flag->get_value().c_str()),
             const_cast<char*>(m_file_from->get_value().c_str()),
             const_cast<char*>(m_file_to->get_value().c_str()), NULL };
-        execvp(executable.c_str(), exec_args);  
+        if (-1 == execvp(executable.c_str(), exec_args)) {
+            std::cout << strerror(errno) << std::endl;
+            exit(0);
+        }
     }
 }
 

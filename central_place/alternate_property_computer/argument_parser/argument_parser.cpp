@@ -84,7 +84,7 @@ arg_name_to_value_map argument_parser::parse_and_get_args(
     } catch (const boost::program_options::error& e) {
         // TODO: Change cout to log.
         std::cerr << "\nError parsing command line: " << e.what() << std::endl << std::endl;
-        std::cout << m_options_description;
+        m_logger << m_options_description;
         // TODO throw exception.
     }   // TODO: catch parsing exception and throw up.
     return a_n_v;
@@ -96,10 +96,10 @@ argument_parser& argument_parser::get_instance()
     return *s_instance;
 }
 
-void argument_parser::instantiate()
+void argument_parser::instantiate(std::ofstream& logger)
 {
     assert(s_instance == nullptr);
-    s_instance = new argument_parser();
+    s_instance = new argument_parser(logger);
 }
 
 void argument_parser::destroy()
@@ -109,7 +109,8 @@ void argument_parser::destroy()
     s_instance = nullptr;
 }
 
-argument_parser::argument_parser()
+argument_parser::argument_parser(std::ofstream& logger) :
+    m_logger(logger)
 {
     m_options_description.add_options()
         ("graph_file,g", 

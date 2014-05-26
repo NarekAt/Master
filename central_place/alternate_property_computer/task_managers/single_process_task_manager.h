@@ -31,5 +31,6 @@ public:
      * @brief Constructor
      * @param world World of mpi
      */
-    single_process_task_manager(boost::mpi::communicator& world);
+    single_process_task_manager(boost::mpi::communicator& world,
+        std::ofstream& logger);
 };

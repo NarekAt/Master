@@ -6,6 +6,7 @@
 #pragma once
 
 #include "types.h"
+#include <fstream>
 
 /**
  * TODO: 1) make base class for writers to
@@ -56,7 +57,7 @@ public:
     /**
      * @brief Intstantiates singletone object.
      */
-    static void instantiate();
+    static void instantiate(std::ofstream& logger);
 
 public:
     /**
@@ -74,7 +75,7 @@ public:
     /**
      * @brief Constructor
      */
-    results_writer();
+    results_writer(std::ofstream& logger);
 
 public:
     /**
@@ -91,4 +92,5 @@ private:
     bool m_is_writer_ready;
     unsigned m_vertex_count;
     double m_probability;
+    std::ofstream& m_logger;
 };

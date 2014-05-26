@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <fstream>
+
 /**
  * @class package
  * @brief package class is needed for initialization
@@ -22,7 +24,7 @@ public:
     /**
      * @brief initialize objects.
      */
-    static void init();
+    static void init(std::ofstream& logger);
 
 public:
     /**

@@ -34,10 +34,10 @@ unsigned fill_edges(graph_types::graph& g, const double p)
 }
 
 graph_types::graph generator::run(const graph_types::graph_size s, const double p,
-    const graph_types::storage_core_type t) const
+    const graph_types::storage_core_type t, std::ofstream& logger) const
 {
     time_t c_t = time(0);
-    std::cout << "\n>>>>> Generation Started: " << ctime(&c_t);
+    logger << "\n>>>>> Generation Started: " << ctime(&c_t);
     graph_types::graph g;
     assert(graph_types::storage_core_type::INVALID_CT != t);
     assert(0.0 <= p && 1.0 >= p);
@@ -48,7 +48,7 @@ graph_types::graph generator::run(const graph_types::graph_size s, const double 
     }
     const unsigned edge_count = fill_edges(g, p);
     c_t = time(0);
-    std::cout << "\n>>>>> Generation Finished: " << ctime(&c_t);
-    std::cout << "\n>>>>> Generated graph contains " << edge_count << " edges";
+    logger << "\n>>>>> Generation Finished: " << ctime(&c_t);
+    logger << "\n>>>>> Generated graph contains " << edge_count << " edges";
     return g;
 }

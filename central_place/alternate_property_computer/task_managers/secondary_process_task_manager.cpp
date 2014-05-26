@@ -69,6 +69,6 @@ void secondary_process_task_manager::calculate_and_send()
 }
 
 secondary_process_task_manager::secondary_process_task_manager(
-    boost::mpi::communicator& world) :
-    task_manager_base(world)
+    boost::mpi::communicator& world, std::ofstream& logger) :
+    task_manager_base(world, logger)
 {}

@@ -12,7 +12,6 @@
 void single_process_task_manager::run()
 {
     assert(m_inited);
-    calculate_initial_non_existing_edges();
     for (auto& mu : m_mu_list) {
         single_results_list c_r;
         calculate_for_single_mu_by_pass_count(c_r, mu);
@@ -24,8 +23,9 @@ void single_process_task_manager::treat_status_information(const persent_to_mu& 
 {
     // Means That whole calculation was done for came mu.
     if (0 == info.first) {
-        std::cout << "\n*** Calculation was done for mu: " << info.second
+        m_logger << "\n*** Calculation was done for mu: " << info.second
             << " ***\n";
+        m_logger.flush();
         return;
     }
     std::string p_t_n = get_alternate_property_name_by_type(
@@ -33,10 +33,11 @@ void single_process_task_manager::treat_status_information(const persent_to_mu& 
     std::string info_message = std::string("calculation by ") + p_t_n + 
         std::string(" was done by ") + std::to_string(info.first) + 
         std::string("% for mu ") + std::to_string(info.second);
-    std::cout << info_message << std::endl;
+    m_logger << info_message << std::endl;
+    m_logger.flush();
 }
 
 single_process_task_manager::single_process_task_manager(
-    boost::mpi::communicator& world) :
-    task_manager_base(world)
+    boost::mpi::communicator& world, std::ofstream& logger) :
+    task_manager_base(world, logger)
 {}

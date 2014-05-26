@@ -5,7 +5,6 @@
 
 #include "writer.h"
 #include "graph.h"
-#include <fstream>
 #include <boost/archive/text_oarchive.hpp>
 #include <iostream>
 #include <random>
@@ -13,10 +12,10 @@
 #include <assert.h>
 
 void writer::run(const graph_types::graph& g, const graph_types::graph_size s,
-    const double p, const std::string& f) const
+    const double p, const std::string& f, std::ofstream& logger) const
 {
     time_t c_t = time(0);
-    std::cout << "\n>>>>> Graph writing Started: " << ctime(&c_t);
+    logger << "\n>>>>> Graph writing Started: " << ctime(&c_t);
     std::ofstream graph_file;
     graph_file.open(f);
     if (!graph_file.is_open()) {
@@ -27,5 +26,5 @@ void writer::run(const graph_types::graph& g, const graph_types::graph_size s,
     oa << s << p << g;
     graph_file.close();
     c_t = time(0);
-    std::cout << "\n>>>>> Graph writing Finished: " << ctime(&c_t);
+    logger << "\n>>>>> Graph writing Finished: " << ctime(&c_t);
 }

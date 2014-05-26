@@ -55,17 +55,7 @@ private:
      * @param cmd Command to set arguments.
      * @param a_l Argument list to set.
      */
-    void parse_arg_list(cmd_base* cmd, const std::string& a_l);
-
-private:
-    /**
-     * @brief Splits arg-line into vector of args.
-     * @param a_l Argument lin.
-     * @param[out] args Vector to be filled with arguments
-     *             from line.
-     */
-    void split_arg_line(const std::string& a_l
-        , std::vector<std::string>& args);
+    void parse_arg_list(cmd_base* cmd, const std::vector<std::string>& a_l);
 
 private:
     std::map<std::string, cmd_base*> m_commands;

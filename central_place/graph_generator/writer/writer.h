@@ -7,6 +7,7 @@
 
 #include "graph_types.h"
 #include <string>
+#include <fstream>
 
 namespace graph_types {
     class graph;
@@ -27,5 +28,5 @@ public:
      * @param f output file name.
      */
     void run(const graph_types::graph& g, const graph_types::graph_size s,
-        const double p, const std::string& f) const;
+        const double p, const std::string& f, std::ofstream& logger) const;
 };

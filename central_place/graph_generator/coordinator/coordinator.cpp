@@ -34,12 +34,12 @@ void coordinator::init(const arg_name_to_value_map& a_n_v)
     }
 }
 
-void coordinator::run() const
+void coordinator::run()
 {
     generator g;
     writer w;
-    w.run(g.run(m_vertex_count, m_probability, m_core_type),
-        m_vertex_count, m_probability, m_output_file);
+    w.run(g.run(m_vertex_count, m_probability, m_core_type, m_logger),
+        m_vertex_count, m_probability, m_output_file, m_logger);
     assert(m_inited);
 }
 
@@ -49,10 +49,10 @@ coordinator& coordinator::get_instance()
     return *s_instance;
 }
 
-void coordinator::instantiate()
+void coordinator::instantiate(std::ofstream& logger)
 {
     assert(s_instance == nullptr);
-    s_instance = new coordinator();
+    s_instance = new coordinator(logger);
 }
 
 void coordinator::destroy()
@@ -62,6 +62,6 @@ void coordinator::destroy()
     s_instance = nullptr;
 }
 
-coordinator::coordinator() :
-    m_inited(false)
+coordinator::coordinator(std::ofstream& logger) :
+    m_inited(false), m_logger(logger)
 {}

@@ -8,6 +8,7 @@
 #include "types.h"
 #include "graph_types.h"
 #include <boost/mpi.hpp>
+#include <fstream>
 
 /**
  * @class coordinator
@@ -32,7 +33,7 @@ public:
      * @brief Runs coordinator
      * @note Before call of this function init() must be called.
      */
-    void run() const;
+    void run();
 
 private:
     bool m_inited;
@@ -40,6 +41,7 @@ private:
     double m_probability;
     graph_types::storage_core_type m_core_type;
     std::string m_output_file;
+    std::ofstream& m_logger;
     /// @}
 
     /// @name singleton management
@@ -54,7 +56,7 @@ public:
     /**
      * @brief Intstantiates singletone object.
      */
-    static void instantiate();
+    static void instantiate(std::ofstream& logger);
 
 public:
     /**
@@ -72,7 +74,7 @@ public:
     /**
      * @brief Constructor
      */
-    coordinator();
+    coordinator(std::ofstream& logger);
 
 public:
     /**

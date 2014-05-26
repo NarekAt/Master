@@ -170,7 +170,7 @@ void task_manager_base::calculate_initial_alternate_property_count()
     m_initial_property_count = m_counter->compute_initial_count();
     t = clock() - t;
     // TODO: change cout to log.
-    std::cout << "\nGraph initial " << 
+    m_logger << "\nGraph initial " << 
         get_alternate_property_name_by_type(m_alternate_property_type) <<
         " computed: " << m_initial_property_count << 
         " time: " << static_cast<float>(t)/CLOCKS_PER_SEC << std::endl;
@@ -178,14 +178,16 @@ void task_manager_base::calculate_initial_alternate_property_count()
     m_counter = nullptr;
 }
 
-task_manager_base::task_manager_base(boost::mpi::communicator& world) :
+task_manager_base::task_manager_base(boost::mpi::communicator& world,
+    std::ofstream& logger) :
     m_inited(false),
     m_world(world),
     m_pass_count(10),
     m_randomizator(nullptr),
     m_counter(nullptr),
     m_initial_graph(graph_types::storage_core_type::BITSETS_FULL),
-    m_current_graph(graph_types::storage_core_type::BITSETS_FULL)
+    m_current_graph(graph_types::storage_core_type::BITSETS_FULL),
+    m_logger(logger)
 {}
 
 task_manager_base::~task_manager_base()

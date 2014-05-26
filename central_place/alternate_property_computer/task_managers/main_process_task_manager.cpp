@@ -24,7 +24,8 @@ void main_process_task_manager::treat_status_information(const persent_to_mu& in
 {
     // Means That whole calculation was done for came mu.
     if (0 == info.first) {
-        std::cout << "\n*** Calculation was done for mu: " << info.second << " ***\n";
+        m_logger << "\n*** Calculation was done for mu: " << info.second << " ***\n";
+        m_logger.flush();
         return;
     }
     m_counter = property_counter_factory::get_counter(
@@ -34,7 +35,8 @@ void main_process_task_manager::treat_status_information(const persent_to_mu& in
     std::string info_message = std::string("calculation by ") + p_t_n + 
         std::string(" was done by ") + std::to_string(info.first) + 
         std::string("% for mu ") + std::to_string(info.second);
-    std::cout << info_message << std::endl;
+    m_logger << info_message << std::endl;
+    m_logger.flush();
     delete m_counter;
     m_counter = nullptr;
 }
@@ -155,6 +157,6 @@ void main_process_task_manager::receive_results_from_processes()
 }
 
 main_process_task_manager::main_process_task_manager(
-    boost::mpi::communicator& world) :
-    task_manager_base(world)
+    boost::mpi::communicator& world, std::ofstream& logger) :
+    task_manager_base(world, logger)
 {}

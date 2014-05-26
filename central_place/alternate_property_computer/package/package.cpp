@@ -8,11 +8,11 @@
 #include "argument_parser.h"
 #include "results_writer.h"
 
-void package::init()
+void package::init(std::ofstream& logger)
 {
-    argument_parser::instantiate();
-    mediator::instantiate();
-    results_writer::instantiate();
+    argument_parser::instantiate(logger);
+    mediator::instantiate(logger);
+    results_writer::instantiate(logger);
 }
 
 void package::uninit()

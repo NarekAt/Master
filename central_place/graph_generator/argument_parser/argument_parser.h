@@ -8,6 +8,8 @@
 #include "types.h"
 #include <boost/program_options.hpp>
 
+#include <fstream>
+
 /**
  * @class argument_parser
  * @brief this class is used for parsing argument of program and
@@ -28,6 +30,7 @@ public:
         int argc, char* argv[]) const;
 private:
     boost::program_options::options_description m_options_description;
+    std::ofstream& m_logger;
     /// @}
     
     /// @name singleton management
@@ -42,7 +45,7 @@ public:
     /**
      * @brief Intstantiates singletone object.
      */
-    static void instantiate();
+    static void instantiate(std::ofstream& logger);
 
 public:
     /**
@@ -60,7 +63,7 @@ public:
     /**
      * @brief Constructor
      */
-    argument_parser();
+    argument_parser(std::ofstream& logger);
 
 public:
     /**

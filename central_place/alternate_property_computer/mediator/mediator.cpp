@@ -11,6 +11,8 @@
 #include "results_writer.h"
 #include <iostream>
 #include <ctime>
+#include <chrono>
+#include <boost/filesystem.hpp>
 #include <assert.h>
 
 mediator* mediator::s_instance = nullptr;
@@ -58,14 +60,16 @@ void mediator::run(boost::mpi::communicator& world)
 {
     assert(m_inited);
     if (1 == world.size()) {
-        single_process_task_manager t_m(world);
+        single_process_task_manager t_m(world, m_logger);
         run_task_manager_and_send_to_output(t_m);
+        m_logger.close();
     } else {
         if (0 == world.rank()) {
-            main_process_task_manager t_m(world);
+            main_process_task_manager t_m(world, m_logger);
             run_task_manager_and_send_to_output(t_m);
+            m_logger.close();
         } else {
-            secondary_process_task_manager t_m(world);
+            secondary_process_task_manager t_m(world, m_logger);
             t_m.run();
         }
     }
@@ -81,12 +85,12 @@ void mediator::run_task_manager_and_send_to_output(
 {
     // TODO: change cout to log.
     time_t c_t = time(0);
-    std::cout << "\n>>>>> Calculation Started: " << ctime(&c_t);
+    m_logger << "\n>>>>> Calculation Started: " << ctime(&c_t);
     t_m.init(m_graph, m_mu_list, m_step_count,
         m_randomization_type, m_alternate_property_type);
     t_m.run();
     c_t = time(0);
-    std::cout << "\n>>>>> Calculation Finished: " << ctime(&c_t);
+    m_logger << "\n>>>>> Calculation Finished: " << ctime(&c_t);
 }
 
 mediator& mediator::get_instance()
@@ -95,10 +99,10 @@ mediator& mediator::get_instance()
     return *s_instance;
 }
 
-void mediator::instantiate()
+void mediator::instantiate(std::ofstream& logger)
 {
     assert(s_instance == nullptr);
-    s_instance = new mediator();
+    s_instance = new mediator(logger);
 }
 
 void mediator::destroy()
@@ -108,7 +112,8 @@ void mediator::destroy()
     s_instance = nullptr;
 }
 
-mediator::mediator() :
+mediator::mediator(std::ofstream& logger) :
     m_inited(false),
-    m_graph(graph_types::storage_core_type::BITSETS_FULL)
+    m_graph(graph_types::storage_core_type::BITSETS_FULL),
+    m_logger(logger)
 {}

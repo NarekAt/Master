@@ -1,5 +1,5 @@
-
 TARGET=core.exe
+
 include ../common.mk
 
 SUBDIRS=../cmd ../cmd_arg ../cmd_base ../cmd_processor ../exceptions ../main 

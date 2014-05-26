@@ -6,6 +6,7 @@
  */
 
 #include "graph.h"
+#include <fstream>
 
 /**
  * @class generator
@@ -21,5 +22,5 @@ public:
      * @param t core data type of graph.
      */
     graph_types::graph run(const graph_types::graph_size s, const double p,
-        const graph_types::storage_core_type t) const;
+        const graph_types::storage_core_type t, std::ofstream& logger) const;
 };

@@ -7,6 +7,7 @@
 
 #include "types.h"
 #include "graph.h"
+#include <fstream>
 #include <boost/mpi.hpp>
 
 class task_manager_base;
@@ -64,6 +65,7 @@ private:
     boost::mpi::communicator m_world;
     unsigned m_vertex_count;
     double m_probability;
+    std::ofstream& m_logger;
     /// @}
 
     /// @name singleton management
@@ -78,7 +80,7 @@ public:
     /**
      * @brief Intstantiates singletone object.
      */
-    static void instantiate();
+    static void instantiate(std::ofstream& logger);
 
 public:
     /**
@@ -96,7 +98,7 @@ public:
     /**
      * @brief Constructor
      */
-    mediator();
+    mediator(std::ofstream& logger);
 
 public:
     /**

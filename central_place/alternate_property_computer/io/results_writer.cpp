@@ -99,7 +99,7 @@ void results_writer::write_single_results_list(
     }
     output.close();
     // TODO: change cout to log.
-    std::cout << "\nWriting Results for mu: " << mu <<
+    m_logger << "\nWriting Results for mu: " << mu <<
         " finished.\n";
 }
 
@@ -109,10 +109,10 @@ results_writer& results_writer::get_instance()
     return *s_instance;
 }
 
-void results_writer::instantiate()
+void results_writer::instantiate(std::ofstream& logger)
 {
     assert(s_instance == nullptr);
-    s_instance = new results_writer();
+    s_instance = new results_writer(logger);
 }
 
 void results_writer::destroy()
@@ -122,6 +122,7 @@ void results_writer::destroy()
     s_instance = nullptr;
 }
 
-results_writer::results_writer()
-    : m_is_writer_ready(false)
+results_writer::results_writer(std::ofstream& logger)
+    : m_is_writer_ready(false),
+    m_logger(logger)
 {}
